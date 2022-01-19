@@ -10,7 +10,8 @@ abstract class BindingActivity<T : ViewDataBinding>: AppCompatActivity() {
     @LayoutRes
     abstract fun getLayoutResId(): Int
 
-    private lateinit var binding: T
+    protected lateinit var binding: T
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
