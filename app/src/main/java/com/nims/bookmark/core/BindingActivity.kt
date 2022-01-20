@@ -1,4 +1,4 @@
-package com.nims.bookmark
+package com.nims.bookmark.core
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
