@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.snackbar.Snackbar
 import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingActivity
-import com.nims.bookmark.databinding.ActivityMainBindingImpl
+import com.nims.bookmark.databinding.ActivityMainBinding
 import com.nims.bookmark.ext.replaceTitle
 import com.nims.bookmark.ext.setupActionBar
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class MainActivity : BindingActivity<ActivityMainBindingImpl>() {
+class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     override fun getLayoutResId(): Int = R.layout.activity_main
 
