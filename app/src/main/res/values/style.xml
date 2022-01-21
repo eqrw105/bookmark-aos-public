@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Bookmark" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
+        <!-- Customize your theme here. -->
+    </style>
+
     <style name="CommonActionBar" parent="Theme.Bookmark">
         <item name="colorControlNormal">?attr/colorPrimary</item>
         <item name="android:background">?attr/colorOnPrimary</item>
         <item name="elevation">0dp</item>
     </style>
 
-    <style name="CommonTabLayout" parent="Theme.Bookmark">
+    <style name="ScrollTabLayout" parent="Theme.Bookmark">
         <item name="tabMode">scrollable</item>
+    </style>
+
+    <style name="FixedTabLayout" parent="Theme.Bookmark">
+        <item name="tabMode">fixed</item>
+        <item name="tabGravity">fill</item>
     </style>
 
     <style name="CommonFloatingActionButton" parent="Theme.Bookmark">
@@ -16,5 +36,57 @@
         <item name="android:layout_marginBottom">50dp</item>
         <item name="layout_anchor">@id/container</item>
         <item name="layout_anchorGravity">bottom|end</item>
+    </style>
+
+    <style name="CommonEditText" parent="Theme.Bookmark">
+        <item name="colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="RegisterPathTitleEditText" parent="CommonEditText">
+        <item name="android:hint">@string/register_path_title_hint</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:inputType">text</item>
+        <item name="android:nextFocusDown">@id/url</item>
+    </style>
+
+    <style name="RegisterPathUrlEditText" parent="CommonEditText">
+        <item name="android:hint">@string/register_path_url_hint</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:inputType">textUri</item>
+    </style>
+
+    <style name="RegisterFolderTitleEditText" parent="CommonEditText">
+        <item name="android:hint">@string/register_folder_title_hint</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:inputType">text</item>
+        <item name="android:nextFocusDown">@id/url</item>
+    </style>
+
+    <style name="CommonContainer" parent="Theme.Bookmark">
+        <item name="android:padding">20dp</item>
+    </style>
+
+    <style name="CommonButton" parent="Theme.Bookmark">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="CommonSpinner" parent="Theme.Bookmark">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+
+    <style name="CommonSpinnerItem" parent="Theme.Bookmark">
+        <item name="android:textSize">15sp</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

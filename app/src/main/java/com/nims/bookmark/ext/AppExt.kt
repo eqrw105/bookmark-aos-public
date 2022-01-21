@@ -16,3 +16,7 @@ fun AppCompatActivity.replaceTitle(@StringRes stringId: Int) {
 fun AppCompatActivity.replaceLogo(@DrawableRes drawableId: Int) {
     supportActionBar?.run { this.setLogo(drawableId) }
 }
+
+fun AppCompatActivity.addBack() {
+    supportActionBar?.run { this.setDisplayHomeAsUpEnabled(true) }
+}

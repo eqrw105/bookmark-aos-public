@@ -28,16 +28,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.setting -> {
                 Snackbar.make(binding.root, "Setting Pressed", Snackbar.LENGTH_SHORT).show()
-                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                }
             }
         }
         return super.onOptionsItemSelected(item)

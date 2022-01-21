@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">bookmark</string>
+
+    <string name="common_all">전체</string>
+
+    <!-- RegisterActivity 등록 페이지 -->
+    <string name="register_title">등록하기</string>
+    <string name="register_folder">폴더 추가</string>
+    <string name="register_path">게시물 추가</string>
+    <string name="register_path_title_hint">제목</string>
+    <string name="register_path_url_hint">URL</string>
+    <string name="register_folder_title_hint">폴더명</string>
+    <string name="register_done">추가하기</string>
+
 </resources>
