@@ -31,7 +31,6 @@ class RegisterFolderFragment : BindingFragment<FragmentRegisterFolderBinding>() 
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding.viewModel = getViewModel()
-        binding.lifecycleOwner = this
 
         if (savedInstanceState != null) {
             val title = savedInstanceState.getString(RegisterPathFragment.TITLE_KEY)
