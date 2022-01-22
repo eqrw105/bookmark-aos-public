@@ -81,10 +81,25 @@
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
-
     <style name="CommonSpinnerItem" parent="Theme.Bookmark">
         <item name="android:textSize">15sp</item>
         <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="MainPathTitleTextView" parent="Theme.Bookmark">
+        <item name="android:textSize">18sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="MainPathUrlTextView" parent="Theme.Bookmark">
+        <item name="android:textSize">15sp</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/black</item>

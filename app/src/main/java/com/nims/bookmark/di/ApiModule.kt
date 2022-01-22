@@ -1,9 +1,8 @@
 package com.nims.bookmark.di
 
 import androidx.room.Room
-import com.nims.bookmark.core.BMApplication
 import com.nims.bookmark.room.BMDatabase
-import com.nims.bookmark.ui.RegisterRepositoryImpl
+import com.nims.bookmark.ui.RepositoryImpl
 import org.koin.dsl.module
 
 val apiModule = module {
@@ -24,5 +23,5 @@ val apiModule = module {
         get<BMDatabase>().folderDao()
     }
 
-    single { RegisterRepositoryImpl(get(), get()) }
+    single { RepositoryImpl(get(), get()) }
 }

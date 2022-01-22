@@ -7,8 +7,11 @@ import androidx.room.Query
 
 @Dao
 interface PathDao {
-    @Query("SELECT * FROM Path")
+    @Query("SELECT * FROM Path ORDER BY Path.date DESC")
     fun getAll(): List<Path>
+
+    @Query("SELECT * FROM Path WHERE Path.folderId == :folderId  ORDER BY Path.date DESC")
+    fun getAll(folderId: Int): List<Path>
 
     @Insert
     fun insertAll(vararg paths: Path)

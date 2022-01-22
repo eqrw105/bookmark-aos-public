@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.nims.bookmark.ui.MainViewModel" />
+        <variable
+            name="item"
+            type="com.nims.bookmark.room.Path" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/CommonContainer"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/MainPathTitleTextView"
+            android:text="@{item.title}"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/MainPathUrlTextView"
+            android:text="@{item.url}"/>
+    </LinearLayout>
+</layout>
