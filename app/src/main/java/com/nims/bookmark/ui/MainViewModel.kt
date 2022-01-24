@@ -7,6 +7,7 @@ import android.view.View
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.RecyclerView
 import com.nims.bookmark.NotNullMutableLiveData
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
@@ -38,5 +39,17 @@ class MainViewModel(private val repository: RepositoryImpl): ViewModel() {
         val intent = Intent(context, DetailActivity::class.java)
         intent.putExtra(DetailActivity.PATH_ITEM_KEY, item)
         context.startActivity(intent)
+    }
+
+    fun updatePath(fromItem: Path, toItem: Path) {
+        val tempLastUpdate = fromItem.lastUpdate
+        fromItem.lastUpdate = toItem.lastUpdate
+        toItem.lastUpdate = tempLastUpdate
+        repository.updatePath(fromItem)
+        repository.updatePath(toItem)
+    }
+
+    fun deletePath(path: Path) {
+        repository.deletePath(path)
     }
 }

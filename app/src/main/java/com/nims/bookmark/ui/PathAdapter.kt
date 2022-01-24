@@ -10,8 +10,8 @@ import com.nims.bookmark.core.BindingViewHolder
 import com.nims.bookmark.databinding.ItemPathBinding
 import com.nims.bookmark.room.Path
 
-class PathAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<PathViewHolder>() {
-    var items: List<Path> = arrayListOf()
+class PathAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<PathViewHolder>(), ItemTouchHelperListener {
+    var items: MutableList<Path> = arrayListOf()
     set(value) {
         val callback = PathDiffCallback(field, value)
         field = value
@@ -32,6 +32,20 @@ class PathAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<P
     }
 
     override fun getItemCount(): Int = items.size
+
+
+    override fun onItemMoved(from: Int, to: Int) {
+        viewModel.updatePath(items[from], items[to])
+        val fromItem = items.removeAt(from)
+        items.add(to, fromItem)
+        notifyItemMoved(from, to)
+    }
+
+    override fun onItemSwiped(position: Int) {
+        viewModel.deletePath(items[position])
+        items.removeAt(position)
+        notifyItemRemoved(position)
+    }
 }
 
 class PathViewHolder(view: View) : BindingViewHolder<ItemPathBinding>(view)

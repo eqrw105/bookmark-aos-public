@@ -10,6 +10,8 @@ interface Repository {
     fun insertFolder(folder: Folder)
     fun getPaths(folderId: Int): List<Path>
     fun getFolders(): List<Folder>
+    fun deletePath(path: Path)
+    fun updatePath(path: Path)
 }
 
 class RepositoryImpl(private val pathDao: PathDao, private val folderDao: FolderDao): Repository {
@@ -22,5 +24,6 @@ class RepositoryImpl(private val pathDao: PathDao, private val folderDao: Folder
         return pathDao.getAll(folderId)
     }
     override fun getFolders() = folderDao.getAll()
-
+    override fun deletePath(path: Path) = pathDao.delete(path)
+    override fun updatePath(path: Path) = pathDao.update(path)
 }
