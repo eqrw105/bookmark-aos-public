@@ -63,13 +63,13 @@ class RegisterPathFragment : BindingFragment<FragmentRegisterPathBinding>() {
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        val title = savedInstanceState?.getString(TITLE_KEY)?: ""
+        val title = savedInstanceState?.getString(TITLE_KEY) ?: ""
         binding.title.setText(title)
 
-        val url = savedInstanceState?.getString(URL_KEY)?: ""
+        val url = savedInstanceState?.getString(URL_KEY) ?: ""
         binding.url.setText(url)
         binding.folder.post {
-            val currentItem = savedInstanceState?.getInt(FOLDER_CURRENT_ITEM_KEY)?: 0
+            val currentItem = savedInstanceState?.getInt(FOLDER_CURRENT_ITEM_KEY) ?: 0
             binding.folder.setSelection(currentItem)
         }
         super.onViewStateRestored(savedInstanceState)

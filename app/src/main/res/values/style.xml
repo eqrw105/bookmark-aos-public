@@ -116,7 +116,6 @@
     <style name="CommonScrollTopImageView" parent="Theme.Bookmark">
         <item name="android:layout_gravity">center|bottom</item>
         <item name="android:layout_marginBottom">30dp</item>
-        <item name="android:padding">10dp</item>
         <item name="android:src">@drawable/ic_circle_arrow_top</item>
     </style>
 </resources>

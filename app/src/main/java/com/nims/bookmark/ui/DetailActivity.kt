@@ -1,12 +1,10 @@
 package com.nims.bookmark.ui
 
-import android.graphics.Bitmap
-import android.net.http.SslError
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.webkit.*
-import com.google.android.material.snackbar.Snackbar
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingActivity
 import com.nims.bookmark.databinding.ActivityDetailBinding
@@ -34,7 +32,7 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>() {
         }
     }
 
-    fun openDetail(url: String) {
+    private fun openDetail(url: String) {
         showProgress()
         val webView = binding.webView
         webView.webViewClient = WebViewClient()
@@ -47,7 +45,6 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>() {
 
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
-                Log.d("qqqq", view?.progress.toString())
                 if (view?.progress == 100) {
                     hideProgress()
                 }

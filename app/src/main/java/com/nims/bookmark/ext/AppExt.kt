@@ -37,7 +37,8 @@ fun AppCompatActivity.showProgress() {
 }
 
 fun AppCompatActivity.hideProgress() {
-    val progressDialog = supportFragmentManager.findFragmentByTag(ARTProgressDialogFragment.TAG) as? ARTProgressDialogFragment
+    val progressDialog =
+        supportFragmentManager.findFragmentByTag(ARTProgressDialogFragment.TAG) as? ARTProgressDialogFragment
     progressDialog?.dismissAllowingStateLoss()
 }
 
@@ -51,6 +52,7 @@ fun Fragment.showProgress() {
 }
 
 fun Fragment.hideProgress() {
-    val progressDialog = childFragmentManager.findFragmentByTag(ARTProgressDialogFragment.TAG) as? ARTProgressDialogFragment
+    val progressDialog =
+        childFragmentManager.findFragmentByTag(ARTProgressDialogFragment.TAG) as? ARTProgressDialogFragment
     progressDialog?.dismissAllowingStateLoss()
 }

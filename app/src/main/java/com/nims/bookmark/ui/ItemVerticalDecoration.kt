@@ -11,7 +11,7 @@ class ItemVerticalDecoration(
     context: Context,
     private val side: Float,
     private val height: Float
-): RecyclerView.ItemDecoration() {
+) : RecyclerView.ItemDecoration() {
     private val color = ContextCompat.getColor(context, R.color.gray)
     private val paint = Paint().apply { color = this@ItemVerticalDecoration.color }
 
@@ -21,7 +21,7 @@ class ItemVerticalDecoration(
         val left = parent.paddingLeft + side
         val right = parent.width - parent.paddingRight - side
         val childCount = parent.childCount
-        for (i in 0 until childCount-1) {
+        for (i in 0 until childCount - 1) {
             val child = parent.getChildAt(i)
             val params = child.layoutParams as RecyclerView.LayoutParams
 

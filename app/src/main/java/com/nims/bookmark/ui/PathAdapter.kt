@@ -10,14 +10,16 @@ import com.nims.bookmark.core.BindingViewHolder
 import com.nims.bookmark.databinding.ItemPathBinding
 import com.nims.bookmark.room.Path
 
-class PathAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<PathViewHolder>(), ItemTouchHelperListener {
+class PathAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<PathViewHolder>(),
+    ItemTouchHelperListener {
     var items: MutableList<Path> = arrayListOf()
-    set(value) {
-        val callback = PathDiffCallback(field, value)
-        field = value
-        val result = DiffUtil.calculateDiff(callback)
-        result.dispatchUpdatesTo(this)
-    }
+        set(value) {
+            val callback = PathDiffCallback(field, value)
+            field = value
+            val result = DiffUtil.calculateDiff(callback)
+            result.dispatchUpdatesTo(this)
+        }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PathViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.item_path, parent, false)
@@ -50,7 +52,8 @@ class PathAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<P
 
 class PathViewHolder(view: View) : BindingViewHolder<ItemPathBinding>(view)
 
-class PathDiffCallback(private val oldList: List<Path>, private val newList: List<Path>): DiffUtil.Callback() {
+class PathDiffCallback(private val oldList: List<Path>, private val newList: List<Path>) :
+    DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 
     override fun getNewListSize(): Int = newList.size

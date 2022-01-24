@@ -1,7 +1,6 @@
 package com.nims.bookmark.core
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatDelegate
 import com.nims.bookmark.R
 import com.nims.bookmark.di.apiModule
 import com.nims.bookmark.di.viewModelModule
@@ -18,10 +17,12 @@ class BMApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@BMApplication)
-            modules(listOf(
-                apiModule,
-                viewModelModule
-            ))
+            modules(
+                listOf(
+                    apiModule,
+                    viewModelModule
+                )
+            )
         }
         initFolder()
     }

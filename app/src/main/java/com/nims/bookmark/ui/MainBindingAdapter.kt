@@ -15,7 +15,7 @@ fun setPaths(view: RecyclerView, items: MutableList<Path>, viewModel: MainViewMo
         if (this is PathAdapter) {
             this.items = items
         }
-    }?: run {
+    } ?: run {
         PathAdapter(viewModel).apply {
             this.items = items
             view.adapter = this
@@ -33,7 +33,9 @@ fun setFolders(view: TabLayout, items: List<Folder>, viewModel: MainViewModel) {
         view.apply {
             val newTab = this.newTab().setTag(it.value.id).setText(it.value.title)
             addTab(newTab)
-            (this.getChildAt(0) as? ViewGroup)?.run { this.getChildAt(it.index)?.setOnLongClickListener(viewModel.folderDeleteListener) }
+            (this.getChildAt(0) as? ViewGroup)?.run {
+                this.getChildAt(it.index)?.setOnLongClickListener(viewModel.folderDeleteListener)
+            }
         }
     }
 }

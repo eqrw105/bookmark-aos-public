@@ -14,4 +14,4 @@ data class Path(
     @ColumnInfo(name = "folderId") val folderId: Int,
     @ColumnInfo(name = "date") val date: Long,
     @ColumnInfo(name = "lastUpdate") var lastUpdate: Long
-): Serializable
+) : Serializable

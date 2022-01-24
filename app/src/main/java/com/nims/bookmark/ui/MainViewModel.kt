@@ -13,11 +13,12 @@ import com.nims.bookmark.R
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
 
-class MainViewModel(private val repository: RepositoryImpl): ViewModel() {
+class MainViewModel(private val repository: RepositoryImpl) : ViewModel() {
     private val _paths: NotNullMutableLiveData<List<Path>> = NotNullMutableLiveData(arrayListOf())
     val paths: LiveData<List<Path>> get() = _paths
 
-    private val _folders: NotNullMutableLiveData<List<Folder>> = NotNullMutableLiveData(arrayListOf())
+    private val _folders: NotNullMutableLiveData<List<Folder>> =
+        NotNullMutableLiveData(arrayListOf())
     val folders: LiveData<List<Folder>> get() = _folders
 
     private val _scrollTopState: NotNullMutableLiveData<Boolean> = NotNullMutableLiveData(false)
@@ -69,7 +70,11 @@ class MainViewModel(private val repository: RepositoryImpl): ViewModel() {
                     (folderId as? Int)?.run {
                         repository.deleteFolder(this)
                         fetchFolders()
-                        Snackbar.make(it, context.getString(R.string.main_folder_delete_success), Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(
+                            it,
+                            context.getString(R.string.main_folder_delete_success),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
                 }
                 setNegativeButton(context.getString(R.string.main_folder_delete_cancel), null)
@@ -80,7 +85,7 @@ class MainViewModel(private val repository: RepositoryImpl): ViewModel() {
         return@OnLongClickListener true
     }
 
-    val onScrollListener = object: RecyclerView.OnScrollListener() {
+    val onScrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             if (recyclerView.computeVerticalScrollOffset() > 0) {
                 if (!_scrollTopState.value) {

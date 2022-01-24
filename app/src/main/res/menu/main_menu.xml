@@ -5,5 +5,5 @@
         android:id="@+id/setting"
         android:icon="@drawable/ic_help"
         android:title=""
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 </menu>

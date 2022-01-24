@@ -36,7 +36,7 @@ class RegisterFolderFragment : BindingFragment<FragmentRegisterFolderBinding>() 
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        val title = savedInstanceState?.getString(RegisterPathFragment.TITLE_KEY)?: ""
+        val title = savedInstanceState?.getString(RegisterPathFragment.TITLE_KEY) ?: ""
         binding.title.setText(title)
         super.onViewStateRestored(savedInstanceState)
     }

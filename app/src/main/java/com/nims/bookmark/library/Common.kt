@@ -13,7 +13,11 @@ fun px2dp(px: Float): Float {
 }
 
 fun sp2px(sp: Float): Int {
-    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, Resources.getSystem().displayMetrics).toInt()
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_SP,
+        sp,
+        Resources.getSystem().displayMetrics
+    ).toInt()
 }
 
 fun getScreenWidth(): Int {

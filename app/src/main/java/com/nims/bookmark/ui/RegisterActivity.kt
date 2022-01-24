@@ -1,7 +1,6 @@
 package com.nims.bookmark.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingActivity
@@ -9,7 +8,6 @@ import com.nims.bookmark.databinding.ActivityRegisterBinding
 import com.nims.bookmark.ext.addBack
 import com.nims.bookmark.ext.replaceTitle
 import com.nims.bookmark.ext.setupActionBar
-import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 enum class RegisterTabType(val position: Int) {
@@ -35,12 +33,13 @@ class RegisterActivity : BindingActivity<ActivityRegisterBinding>() {
         addBack()
 
         binding.viewPager.isUserInputEnabled = false
-        registerAdapter.items = listOf(RegisterPathFragment.newInstance(), RegisterFolderFragment.newInstance())
+        registerAdapter.items =
+            listOf(RegisterPathFragment.newInstance(), RegisterFolderFragment.newInstance())
         binding.viewPager.offscreenPageLimit = registerAdapter.itemCount
         binding.viewPager.adapter = registerAdapter
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            when(position) {
+            when (position) {
                 RegisterTabType.Path.position -> tab.text = getString(R.string.register_path)
                 RegisterTabType.Folder.position -> tab.text = getString(R.string.register_folder)
             }
