@@ -18,4 +18,7 @@ interface FolderDao {
 
     @Delete
     fun delete(folder: Folder)
+
+    @Query("DELETE FROM Folder WHERE Folder.id == :folderId")
+    fun delete(folderId: Int)
 }

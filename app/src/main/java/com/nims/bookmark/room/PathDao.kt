@@ -21,4 +21,7 @@ interface PathDao {
 
     @Delete
     fun delete(path: Path)
+
+    @Query("DELETE FROM Path WHERE Path.folderId == :folderId")
+    fun deleteFolderItemAll(folderId: Int)
 }

@@ -33,7 +33,8 @@
                     style="@style/ScrollTabLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:folders="@{viewModel.folders}"/>
+                    app:folders="@{viewModel.folders}"
+                    app:viewModel="@{viewModel}"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/bookmarkList"

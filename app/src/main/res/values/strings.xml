@@ -13,4 +13,11 @@
     <string name="register_done">추가하기</string>
     <string name="register_path_success">게시물을 추가했습니다.</string>
     <string name="register_folder_success">폴더를 추가했습니다.</string>
+    <string name="register_path_not_find_folder">폴더를 생성해주세요.</string>
+
+    <!-- MainActivity 메인 페이지 -->
+    <string name="main_folder_delete_message">폴더를 삭제 하시겠습니까?\n폴더의 모든 게시물이 함께 삭제됩니다.</string>
+    <string name="main_folder_delete">삭제</string>
+    <string name="main_folder_delete_cancel">취소</string>
+    <string name="main_folder_delete_success">폴더를 삭제했습니다.</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.nims.bookmark.ui
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
@@ -8,7 +9,10 @@ import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
 import com.nims.bookmark.NotNullMutableLiveData
+import com.nims.bookmark.R
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
 import java.lang.Exception
@@ -51,5 +55,30 @@ class MainViewModel(private val repository: RepositoryImpl): ViewModel() {
 
     fun deletePath(path: Path) {
         repository.deletePath(path)
+    }
+
+    val folderDeleteListener = View.OnLongClickListener {
+        val context = it.context
+        (it as? TabLayout.TabView)?.tab?.let { tab ->
+            AlertDialog.Builder(context).apply {
+                val folderId = tab.tag
+                if (folderId == 1) {
+                    return@OnLongClickListener true
+                }
+                setTitle(tab.text)
+                setMessage(context.getString(R.string.main_folder_delete_message))
+                setPositiveButton(context.getString(R.string.main_folder_delete)) { _, _ ->
+                    (folderId as? Int)?.run {
+                        repository.deleteFolder(this)
+                        fetchFolders()
+                        Snackbar.make(it, context.getString(R.string.main_folder_delete_success), Snackbar.LENGTH_SHORT).show()
+                    }
+                }
+                setNegativeButton(context.getString(R.string.main_folder_delete_cancel), null)
+            }
+                .create()
+                .show()
+        }
+        return@OnLongClickListener true
     }
 }

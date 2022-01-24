@@ -1,5 +1,6 @@
 package com.nims.bookmark.ui
 
+import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -25,12 +26,14 @@ fun setPaths(view: RecyclerView, items: MutableList<Path>, viewModel: MainViewMo
     }
 }
 
-@BindingAdapter(value = ["folders"])
-fun setFolders(view: TabLayout, items: List<Folder>) {
+@BindingAdapter(value = ["folders", "viewModel"])
+fun setFolders(view: TabLayout, items: List<Folder>, viewModel: MainViewModel) {
     view.removeAllTabs()
-    items.forEach {
+    items.withIndex().forEach {
         view.apply {
-            addTab(this.newTab().setTag(it.id).setText(it.title))
+            val newTab = this.newTab().setTag(it.value.id).setText(it.value.title)
+            addTab(newTab)
+            (this.getChildAt(0) as? ViewGroup)?.run { this.getChildAt(it.index)?.setOnLongClickListener(viewModel.folderDeleteListener) }
         }
     }
 }

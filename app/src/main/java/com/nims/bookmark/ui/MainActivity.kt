@@ -29,7 +29,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         binding.viewModel = getViewModel()
         setupActionBar(R.id.toolbar)
         replaceTitle(R.string.app_name)
-        savedInstanceState?: run {
+        savedInstanceState ?: run {
             binding.viewModel?.fetchFolders()
         }
         binding.tabLayout.removeOnTabSelectedListener(folderSelectedListener)
@@ -50,11 +50,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         return super.onOptionsItemSelected(item)
     }
 
-    private val folderSelectedListener = object: TabLayout.OnTabSelectedListener {
+    private val folderSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
             val folderId = tab?.tag
             (folderId as? Int)?.run { binding.viewModel?.fetchPaths(folderId) }
         }
+
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
         override fun onTabReselected(tab: TabLayout.Tab?) {}
     }
@@ -64,26 +65,35 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         registerCallback.launch(intent)
     }
 
-    private val registerCallback = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode != RESULT_OK || it.data == null) {
-            return@registerForActivityResult
-        }
-        val registerData = it.data!!.getSerializableExtra(REGISTER_DATA_KEY) as? RegisterTabType
-        registerData?.run {
-            when(this) {
-                RegisterTabType.Path -> {
-                    refreshPaths()
-                    Snackbar.make(binding.root, getString(R.string.register_path_success), Snackbar.LENGTH_SHORT).show()
-                }
-                RegisterTabType.Folder ->  {
-                    refreshFolders()
-                    Snackbar.make(binding.root, getString(R.string.register_folder_success), Snackbar.LENGTH_SHORT).show()
-                }
+    private val registerCallback =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode != RESULT_OK || it.data == null) {
+                return@registerForActivityResult
             }
-        } ?: kotlin.run {
-            return@registerForActivityResult
+            val registerData = it.data!!.getSerializableExtra(REGISTER_DATA_KEY) as? RegisterTabType
+            registerData?.run {
+                when (this) {
+                    RegisterTabType.Path -> {
+                        refreshPaths()
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.register_path_success),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                    RegisterTabType.Folder -> {
+                        refreshFolders()
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.register_folder_success),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } ?: kotlin.run {
+                return@registerForActivityResult
+            }
         }
-    }
 
     private fun refreshPaths() {
         val selectedPosition = binding.tabLayout.selectedTabPosition

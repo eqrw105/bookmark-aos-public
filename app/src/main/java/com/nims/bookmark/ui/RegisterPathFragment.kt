@@ -46,7 +46,7 @@ class RegisterPathFragment : BindingFragment<FragmentRegisterPathBinding>() {
         binding.viewModel?.fetchFolders()
         binding.viewModel?.folders?.observe(viewLifecycleOwner, {
             folderAdapter.clear()
-            folderAdapter.addAll(it)
+            folderAdapter.addAll(it.filter { it.id != 1 })
         })
         return binding.root
     }
