@@ -13,7 +13,7 @@ import com.nims.bookmark.room.Path
 class DetailActivity : BindingActivity<ActivityDetailBinding>() {
 
     companion object {
-        val PATH_ITEM_KEY = "PathItemKey"
+        const val PATH_ITEM_KEY = "PathItemKey"
     }
 
     override fun getLayoutResId(): Int = R.layout.activity_detail
