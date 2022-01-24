@@ -1,10 +1,9 @@
 package com.nims.bookmark.ui
 
+import android.net.http.SslError
 import android.os.Bundle
 import android.util.Log
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingActivity
 import com.nims.bookmark.databinding.ActivityDetailBinding
@@ -49,6 +48,33 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>() {
                     hideProgress()
                 }
                 super.onPageFinished(view, url)
+            }
+
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                error: WebResourceError?
+            ) {
+                super.onReceivedError(view, request, error)
+                hideProgress()
+            }
+
+            override fun onReceivedHttpError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                errorResponse: WebResourceResponse?
+            ) {
+                super.onReceivedHttpError(view, request, errorResponse)
+                hideProgress()
+            }
+
+            override fun onReceivedSslError(
+                view: WebView?,
+                handler: SslErrorHandler?,
+                error: SslError?
+            ) {
+                super.onReceivedSslError(view, handler, error)
+                hideProgress()
             }
         }
     }
