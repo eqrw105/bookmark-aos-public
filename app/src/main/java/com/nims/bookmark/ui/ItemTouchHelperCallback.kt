@@ -3,9 +3,6 @@ package com.nims.bookmark.ui
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-interface ItemStartDragListener {
-    fun onStartDrag()
-}
 
 interface ItemTouchHelperListener {
     fun onItemMoved(from: Int, to: Int)
