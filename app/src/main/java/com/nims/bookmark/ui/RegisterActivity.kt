@@ -46,10 +46,12 @@ class RegisterActivity : BindingActivity<ActivityRegisterBinding>() {
             }
         }.attach()
 
-        if (savedInstanceState != null) {
-            val currentItem: Int = savedInstanceState.getInt(CURRENT_ITEM_KEY)
-            binding.tabLayout.selectTab(binding.tabLayout.getTabAt(currentItem))
-        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        val currentItem: Int = savedInstanceState.getInt(CURRENT_ITEM_KEY)
+        binding.tabLayout.selectTab(binding.tabLayout.getTabAt(currentItem))
+        super.onRestoreInstanceState(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

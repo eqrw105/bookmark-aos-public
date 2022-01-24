@@ -48,17 +48,6 @@ class RegisterPathFragment : BindingFragment<FragmentRegisterPathBinding>() {
             folderAdapter.clear()
             folderAdapter.addAll(it)
         })
-        if (savedInstanceState != null) {
-            val title = savedInstanceState.getString(TITLE_KEY)
-            binding.title.setText(title)
-
-            val url = savedInstanceState.getString(URL_KEY)
-            binding.url.setText(url)
-            binding.folder.post {
-                val currentItem = savedInstanceState.getInt(FOLDER_CURRENT_ITEM_KEY)
-                binding.folder.setSelection(currentItem)
-            }
-        }
         return binding.root
     }
 
@@ -71,6 +60,19 @@ class RegisterPathFragment : BindingFragment<FragmentRegisterPathBinding>() {
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {}
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        val title = savedInstanceState?.getString(TITLE_KEY)?: ""
+        binding.title.setText(title)
+
+        val url = savedInstanceState?.getString(URL_KEY)?: ""
+        binding.url.setText(url)
+        binding.folder.post {
+            val currentItem = savedInstanceState?.getInt(FOLDER_CURRENT_ITEM_KEY)?: 0
+            binding.folder.setSelection(currentItem)
+        }
+        super.onViewStateRestored(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
