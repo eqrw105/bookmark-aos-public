@@ -1,11 +1,17 @@
 package com.nims.bookmark.ui
 
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import android.view.View
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.nims.bookmark.NotNullMutableLiveData
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
+import java.lang.Exception
+import java.net.URI
 
 class MainViewModel(private val repository: RepositoryImpl): ViewModel() {
     private val _paths: NotNullMutableLiveData<List<Path>> = NotNullMutableLiveData(arrayListOf())
@@ -25,5 +31,12 @@ class MainViewModel(private val repository: RepositoryImpl): ViewModel() {
     fun openRegister(v: View) {
         val context = v.context
         (context as? MainActivity)?.openRegister()
+    }
+
+    fun openPath(v: View, item: Path) {
+        val context = v.context
+        val intent = Intent(context, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.PATH_ITEM_KEY, item)
+        context.startActivity(intent)
     }
 }

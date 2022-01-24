@@ -3,6 +3,7 @@ package com.nims.bookmark.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 import java.util.*
 
 @Entity
@@ -13,4 +14,4 @@ data class Path(
     @ColumnInfo(name = "folderId") val folderId: Int,
     @ColumnInfo(name = "date") val date: Long,
     @ColumnInfo(name = "lastUpdate") val lastUpdate: Long
-)
+): Serializable

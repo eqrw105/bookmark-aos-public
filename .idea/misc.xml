@@ -4,18 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../Volumes/MyPassport/Android/sdk/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.29030797101449274" />
-        <entry key="..\:/Users/smin/Desktop/git/bookmark/app/src/main/res/layout/activity_main.xml" value="0.2667572463768116" />
-        <entry key="..\:/Users/smin/Desktop/git/bookmark/app/src/main/res/layout/item_path.xml" value="0.2667572463768116" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.228125" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.228125" />
         <entry key="app/src/main/res/drawable/ic_plus.xml" value="0.35384615384615387" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.2546875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_progress_bar.xml" value="0.28396739130434784" />
         <entry key="app/src/main/res/layout/fragment_register_folder.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/fragment_register_item.xml" value="0.29030797101449274" />
         <entry key="app/src/main/res/layout/fragment_register_path.xml" value="0.22" />
         <entry key="app/src/main/res/layout/item_common_spinner.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_item_register.xml" value="0.29030797101449274" />
+        <entry key="app/src/main/res/layout/item_path.xml" value="0.29471733086190915" />
         <entry key="app/src/main/res/layout/layout_toolbar.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.21822916666666667" />
       </map>

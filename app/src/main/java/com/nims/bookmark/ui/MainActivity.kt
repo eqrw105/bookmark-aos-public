@@ -18,6 +18,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     companion object {
         const val REGISTER_DATA_KEY: String = "RegisterDataKey"
+        const val CURRENT_ITEM_KEY: String = "CurrentItemKey"
     }
 
     override fun getLayoutResId(): Int = R.layout.activity_main
@@ -28,7 +29,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         binding.viewModel = getViewModel()
         setupActionBar(R.id.toolbar)
         replaceTitle(R.string.app_name)
-        binding.viewModel?.fetchFolders()
+        savedInstanceState?: run {
+            binding.viewModel?.fetchFolders()
+        }
         binding.tabLayout.removeOnTabSelectedListener(folderSelectedListener)
         binding.tabLayout.addOnTabSelectedListener(folderSelectedListener)
     }
@@ -90,5 +93,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     private fun refreshFolders() {
         binding.viewModel?.fetchFolders()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(CURRENT_ITEM_KEY, binding.tabLayout.selectedTabPosition)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        binding.tabLayout.post {
+            val currentPosition = savedInstanceState.getInt(CURRENT_ITEM_KEY)
+            binding.tabLayout.getTabAt(currentPosition)?.select()
+        }
+        super.onRestoreInstanceState(savedInstanceState)
     }
 }
