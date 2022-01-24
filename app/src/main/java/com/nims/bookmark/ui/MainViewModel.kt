@@ -2,10 +2,7 @@ package com.nims.bookmark.ui
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.net.Uri
-import android.util.Log
 import android.view.View
-import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
@@ -15,8 +12,6 @@ import com.nims.bookmark.NotNullMutableLiveData
 import com.nims.bookmark.R
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
-import java.lang.Exception
-import java.net.URI
 
 class MainViewModel(private val repository: RepositoryImpl): ViewModel() {
     private val _paths: NotNullMutableLiveData<List<Path>> = NotNullMutableLiveData(arrayListOf())
@@ -24,6 +19,9 @@ class MainViewModel(private val repository: RepositoryImpl): ViewModel() {
 
     private val _folders: NotNullMutableLiveData<List<Folder>> = NotNullMutableLiveData(arrayListOf())
     val folders: LiveData<List<Folder>> get() = _folders
+
+    private val _scrollTopState: NotNullMutableLiveData<Boolean> = NotNullMutableLiveData(false)
+    val scrollTopState: LiveData<Boolean> get() = _scrollTopState
 
     fun fetchPaths(folderId: Int) {
         _paths.postValue(repository.getPaths(folderId))
@@ -80,5 +78,20 @@ class MainViewModel(private val repository: RepositoryImpl): ViewModel() {
                 .show()
         }
         return@OnLongClickListener true
+    }
+
+    val onScrollListener = object: RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            if (recyclerView.computeVerticalScrollOffset() > 0) {
+                if (!_scrollTopState.value) {
+                    _scrollTopState.postValue(true)
+                }
+            } else {
+                if (_scrollTopState.value) {
+                    _scrollTopState.postValue(false)
+                }
+            }
+            super.onScrolled(recyclerView, dx, dy)
+        }
     }
 }

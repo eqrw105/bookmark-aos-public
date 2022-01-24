@@ -37,3 +37,9 @@ fun setFolders(view: TabLayout, items: List<Folder>, viewModel: MainViewModel) {
         }
     }
 }
+
+@BindingAdapter(value = ["listener"])
+fun setScrollListener(view: RecyclerView, listener: RecyclerView.OnScrollListener) {
+    view.removeOnScrollListener(listener)
+    view.addOnScrollListener(listener)
+}

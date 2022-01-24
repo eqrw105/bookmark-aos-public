@@ -8,6 +8,8 @@
         <variable
             name="viewModel"
             type="com.nims.bookmark.ui.MainViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -34,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:folders="@{viewModel.folders}"
-                    app:viewModel="@{viewModel}"/>
+                    app:viewModel="@{viewModel}" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/bookmarkList"
@@ -42,16 +44,25 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:listener="@{viewModel.onScrollListener}"
                     app:paths="@{viewModel.paths}"
-                    app:viewModel="@{viewModel}"/>
+                    app:viewModel="@{viewModel}" />
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/scrollTop"
+                style="@style/CommonScrollTopImageView"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:onClick="@{(v) -> bookmarkList.smoothScrollToPosition(0)}"
+                android:visibility="@{viewModel.scrollTopState? View.VISIBLE : View.GONE}" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 style="@style/CommonFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_plus"
-                android:onClick="@{(v) -> viewModel.openRegister(v)}"/>
+                android:onClick="@{(v) -> viewModel.openRegister(v)}"
+                android:src="@drawable/ic_plus" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -1,5 +1,6 @@
 package com.nims.bookmark.ui
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -44,7 +45,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.setting -> {
-                Snackbar.make(binding.root, "Setting Pressed", Snackbar.LENGTH_SHORT).show()
+                AlertDialog.Builder(this).apply {
+                    setTitle(getString(R.string.app_name))
+                    setMessage(getString(R.string.app_tutorial))
+                    setPositiveButton(getString(R.string.common_done), null)
+                }
+                    .create()
+                    .show()
             }
         }
         return super.onOptionsItemSelected(item)
