@@ -1,8 +1,11 @@
 package com.nims.bookmark.ui
 
+import android.content.Intent
 import android.net.http.SslError
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.webkit.*
 import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingActivity
@@ -11,6 +14,8 @@ import com.nims.bookmark.ext.*
 import com.nims.bookmark.room.Path
 
 class DetailActivity : BindingActivity<ActivityDetailBinding>() {
+
+    private var path: Path? = null
 
     companion object {
         const val PATH_ITEM_KEY = "PathItemKey"
@@ -23,7 +28,7 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>() {
         setupActionBar(R.id.toolbar)
         addBack()
         intent.extras?.run {
-            val path = this.getSerializable(PATH_ITEM_KEY) as? Path
+            path = this.getSerializable(PATH_ITEM_KEY) as? Path
             path?.let {
                 replaceTitle(it.title)
                 openDetail(it.url)
@@ -86,5 +91,28 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>() {
             return
         }
         super.onBackPressed()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.share -> openShare()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun openShare() {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            val message = path?.url?: ""
+            putExtra(Intent.EXTRA_TEXT, message)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(intent, null)
+        startActivity(shareIntent)
     }
 }
