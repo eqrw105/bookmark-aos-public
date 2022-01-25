@@ -43,13 +43,11 @@ fun setFolders(view: TabLayout, items: List<Folder>, viewModel: MainViewModel) {
             (this.getChildAt(0) as? ViewGroup)?.run {
                 this.getChildAt(it.index)?.setOnLongClickListener(viewModel.folderDeleteListener)
             }
+            //탭 선택했던 기록 자동 선택
+            if (it.value.id == PrefUtil.selectedFolderId) {
+                newTab.select()
+            }
         }
-    }
-    //탭 선택했던 기록 자동 선택
-    items.withIndex().find { it.value.id == PrefUtil.selectedFolderId }?.index?.run {
-        view.getTabAt(
-            this
-        )?.select()
     }
 }
 

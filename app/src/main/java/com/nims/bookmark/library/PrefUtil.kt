@@ -11,13 +11,10 @@ object PrefUtil {
 
     var selectedFolderId: Int = 0
         get() {
-            if (field < 0) {
-                field = pref.getInt(SELECTED_FOLDER_KEY, 0)
-            }
-            return field
+            return pref.getInt(SELECTED_FOLDER_KEY, 0)
         }
         set(value) {
             field = value
-            pref.edit { this.putInt(SELECTED_FOLDER_KEY, value) }
+            pref.edit { this.putInt(SELECTED_FOLDER_KEY, value).commit() }
         }
 }
