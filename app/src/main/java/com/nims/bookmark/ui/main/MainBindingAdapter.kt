@@ -16,7 +16,11 @@ import com.nims.bookmark.room.Path
 fun setPaths(view: RecyclerView, items: MutableList<Path>, viewModel: MainViewModel) {
     view.adapter?.run {
         if (this is PathAdapter) {
+            val isSame = this.items.size == items.size && this.items.containsAll(items)
             this.items = items
+            if (!isSame) {
+                view.post { view.smoothScrollToPosition(0) }
+            }
         }
     } ?: run {
         PathAdapter(viewModel).apply {
@@ -42,7 +46,11 @@ fun setFolders(view: TabLayout, items: List<Folder>, viewModel: MainViewModel) {
         }
     }
     //탭 선택했던 기록 자동 선택
-    items.withIndex().find { it.value.id == PrefUtil.selectedFolderId }?.index?.run { view.getTabAt(this)?.select() }
+    items.withIndex().find { it.value.id == PrefUtil.selectedFolderId }?.index?.run {
+        view.getTabAt(
+            this
+        )?.select()
+    }
 }
 
 @BindingAdapter(value = ["listener"])
