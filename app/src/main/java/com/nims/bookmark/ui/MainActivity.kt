@@ -50,7 +50,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.setting -> {
+            R.id.help -> {
                 AlertDialog.Builder(this).apply {
                     setTitle(getString(R.string.app_name))
                     setMessage(getString(R.string.app_tutorial))
