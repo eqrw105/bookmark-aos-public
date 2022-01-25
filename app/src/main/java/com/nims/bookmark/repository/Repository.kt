@@ -1,4 +1,4 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.repository
 
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.FolderDao
