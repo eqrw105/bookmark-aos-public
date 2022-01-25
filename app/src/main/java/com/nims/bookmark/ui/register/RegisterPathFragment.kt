@@ -1,4 +1,4 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.ui.register
 
 import android.graphics.Color
 import android.os.Bundle

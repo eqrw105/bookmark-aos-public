@@ -1,9 +1,8 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.ui.main
 
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,6 +13,9 @@ import com.nims.bookmark.core.BindingActivity
 import com.nims.bookmark.databinding.ActivityMainBinding
 import com.nims.bookmark.ext.replaceTitle
 import com.nims.bookmark.ext.setupActionBar
+import com.nims.bookmark.ui.register.RegisterActivity
+import com.nims.bookmark.ui.register.RegisterPathFragment
+import com.nims.bookmark.ui.register.RegisterTabType
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MainActivity : BindingActivity<ActivityMainBinding>() {

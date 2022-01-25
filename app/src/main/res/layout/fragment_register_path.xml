@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="com.nims.bookmark.ui.RegisterViewModel" />
+            type="com.nims.bookmark.ui.register.RegisterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/CommonContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.RegisterPathFragment">
+        tools:context=".ui.register.RegisterPathFragment">
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/folder"

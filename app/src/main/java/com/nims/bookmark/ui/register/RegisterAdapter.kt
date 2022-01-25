@@ -1,4 +1,4 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.ui.register
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

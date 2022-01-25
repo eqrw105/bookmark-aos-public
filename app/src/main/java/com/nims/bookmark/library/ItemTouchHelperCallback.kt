@@ -1,4 +1,4 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.library
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView

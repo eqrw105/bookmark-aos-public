@@ -1,7 +1,7 @@
 package com.nims.bookmark.di
 
-import com.nims.bookmark.ui.MainViewModel
-import com.nims.bookmark.ui.RegisterViewModel
+import com.nims.bookmark.ui.main.MainViewModel
+import com.nims.bookmark.ui.register.RegisterViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

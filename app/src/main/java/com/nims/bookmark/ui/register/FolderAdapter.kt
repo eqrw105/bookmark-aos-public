@@ -1,4 +1,4 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.ui.register
 
 import android.content.Context
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.ui.main
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -8,10 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
-import com.nims.bookmark.NotNullMutableLiveData
 import com.nims.bookmark.R
+import com.nims.bookmark.library.NotNullMutableLiveData
+import com.nims.bookmark.repository.RepositoryImpl
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
+import com.nims.bookmark.ui.detail.DetailActivity
 
 class MainViewModel(private val repository: RepositoryImpl) : ViewModel() {
     private val _paths: NotNullMutableLiveData<List<Path>> = NotNullMutableLiveData(arrayListOf())

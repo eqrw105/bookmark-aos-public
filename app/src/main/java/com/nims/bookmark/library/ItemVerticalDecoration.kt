@@ -1,4 +1,4 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.library
 
 import android.content.Context
 import android.graphics.Canvas

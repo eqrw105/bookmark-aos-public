@@ -1,4 +1,4 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.ui.register
 
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayoutMediator

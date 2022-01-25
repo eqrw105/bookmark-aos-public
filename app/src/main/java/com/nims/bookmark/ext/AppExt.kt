@@ -5,7 +5,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.nims.bookmark.ui.ARTProgressDialogFragment
+import com.nims.bookmark.library.ARTProgressDialogFragment
 
 fun AppCompatActivity.setupActionBar(@IdRes toolbarId: Int) {
     setSupportActionBar(findViewById(toolbarId))

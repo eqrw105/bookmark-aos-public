@@ -4,8 +4,8 @@ import android.app.Application
 import com.nims.bookmark.R
 import com.nims.bookmark.di.apiModule
 import com.nims.bookmark.di.viewModelModule
+import com.nims.bookmark.repository.RepositoryImpl
 import com.nims.bookmark.room.Folder
-import com.nims.bookmark.ui.RepositoryImpl
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin

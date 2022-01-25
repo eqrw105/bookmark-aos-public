@@ -1,9 +1,8 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.ui.detail
 
 import android.content.Intent
 import android.net.http.SslError
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.*

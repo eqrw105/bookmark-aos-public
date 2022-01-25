@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.nims.bookmark.ui.RegisterViewModel" />
+            type="com.nims.bookmark.ui.register.RegisterViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.RegisterActivity">
+        tools:context=".ui.register.RegisterActivity">
 
         <include layout="@layout/layout_toolbar" />
 

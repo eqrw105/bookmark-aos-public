@@ -1,4 +1,4 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.ui.main
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingViewHolder
 import com.nims.bookmark.databinding.ItemPathBinding
+import com.nims.bookmark.library.ItemTouchHelperListener
 import com.nims.bookmark.room.Path
 
 class PathAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<PathViewHolder>(),

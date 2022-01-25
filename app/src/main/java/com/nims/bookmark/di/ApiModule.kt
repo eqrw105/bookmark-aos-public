@@ -1,8 +1,8 @@
 package com.nims.bookmark.di
 
 import androidx.room.Room
+import com.nims.bookmark.repository.RepositoryImpl
 import com.nims.bookmark.room.BMDatabase
-import com.nims.bookmark.ui.RepositoryImpl
 import org.koin.dsl.module
 
 val apiModule = module {

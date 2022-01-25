@@ -1,10 +1,12 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.ui.main
 
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
+import com.nims.bookmark.library.ItemTouchHelperCallback
+import com.nims.bookmark.library.ItemVerticalDecoration
 import com.nims.bookmark.library.dp2px
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path

@@ -1,4 +1,4 @@
-package com.nims.bookmark.ui
+package com.nims.bookmark.ui.register
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -6,10 +6,12 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.nims.bookmark.NotNullMutableLiveData
 import com.nims.bookmark.R
+import com.nims.bookmark.library.NotNullMutableLiveData
+import com.nims.bookmark.repository.RepositoryImpl
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
+import com.nims.bookmark.ui.main.MainActivity
 import java.util.*
 
 class RegisterViewModel(private val repository: RepositoryImpl) : ViewModel() {
