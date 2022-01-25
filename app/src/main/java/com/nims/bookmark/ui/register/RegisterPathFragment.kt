@@ -2,6 +2,7 @@ package com.nims.bookmark.ui.register
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.TextView
 import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingFragment
 import com.nims.bookmark.databinding.FragmentRegisterPathBinding
+import com.nims.bookmark.library.PrefUtil
 import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -45,8 +47,14 @@ class RegisterPathFragment : BindingFragment<FragmentRegisterPathBinding>() {
 
         binding.viewModel?.fetchFolders()
         binding.viewModel?.folders?.observe(viewLifecycleOwner, {
+            val filterList = it.filter { it.id != 1 }
             folderAdapter.clear()
-            folderAdapter.addAll(it.filter { it.id != 1 })
+            folderAdapter.addAll(filterList)
+            //폴더 자동 선택
+            val selectedFolderId = PrefUtil.selectedFolderId
+            filterList.withIndex().find { it.value.id == selectedFolderId }?.index?.run {
+                binding.folder.post { binding.folder.setSelection(this) }
+            }
         })
 
         activity?.intent?.getStringExtra(URL_KEY)?.run {

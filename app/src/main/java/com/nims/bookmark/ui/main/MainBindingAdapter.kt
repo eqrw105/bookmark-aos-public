@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.nims.bookmark.library.ItemTouchHelperCallback
 import com.nims.bookmark.library.ItemVerticalDecoration
+import com.nims.bookmark.library.PrefUtil
 import com.nims.bookmark.library.dp2px
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
@@ -40,6 +41,8 @@ fun setFolders(view: TabLayout, items: List<Folder>, viewModel: MainViewModel) {
             }
         }
     }
+    //탭 선택했던 기록 자동 선택
+    items.withIndex().find { it.value.id == PrefUtil.selectedFolderId }?.index?.run { view.getTabAt(this)?.select() }
 }
 
 @BindingAdapter(value = ["listener"])

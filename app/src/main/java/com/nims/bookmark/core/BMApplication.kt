@@ -1,6 +1,7 @@
 package com.nims.bookmark.core
 
 import android.app.Application
+import android.content.Context
 import com.nims.bookmark.R
 import com.nims.bookmark.di.apiModule
 import com.nims.bookmark.di.viewModelModule
@@ -12,9 +13,12 @@ import org.koin.core.context.startKoin
 import java.util.*
 
 class BMApplication : Application() {
-
+    companion object {
+        lateinit var context: BMApplication
+    }
     override fun onCreate() {
         super.onCreate()
+        context = this
         startKoin {
             androidContext(this@BMApplication)
             modules(

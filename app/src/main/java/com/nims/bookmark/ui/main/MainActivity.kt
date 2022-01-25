@@ -13,6 +13,7 @@ import com.nims.bookmark.core.BindingActivity
 import com.nims.bookmark.databinding.ActivityMainBinding
 import com.nims.bookmark.ext.replaceTitle
 import com.nims.bookmark.ext.setupActionBar
+import com.nims.bookmark.library.PrefUtil
 import com.nims.bookmark.ui.register.RegisterActivity
 import com.nims.bookmark.ui.register.RegisterPathFragment
 import com.nims.bookmark.ui.register.RegisterTabType
@@ -22,7 +23,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     companion object {
         const val REGISTER_DATA_KEY: String = "RegisterDataKey"
-        const val CURRENT_ITEM_KEY: String = "CurrentItemKey"
     }
 
     override fun getLayoutResId(): Int = R.layout.activity_main
@@ -40,7 +40,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         binding.tabLayout.addOnTabSelectedListener(folderSelectedListener)
 
         if (intent.action == Intent.ACTION_SEND && intent.type == "text/plain") {
-            val sendText = intent.getStringExtra(Intent.EXTRA_TEXT)?: ""
+            PrefUtil.selectedFolderId = 0
+            val sendText = intent.getStringExtra(Intent.EXTRA_TEXT) ?: ""
             openRegister(sendText)
         }
     }
@@ -68,7 +69,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     private val folderSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
             val folderId = tab?.tag
-            (folderId as? Int)?.run { binding.viewModel?.fetchPaths(folderId) }
+            (folderId as? Int)?.run {
+                binding.viewModel?.fetchPaths(folderId)
+            }
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -76,6 +79,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     }
 
     fun openRegister(sendText: String? = null) {
+        saveSelectedFolderId()
         val intent = Intent(this, RegisterActivity::class.java)
         sendText?.run {
             intent.putExtra(RegisterPathFragment.URL_KEY, this)
@@ -123,16 +127,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         binding.viewModel?.fetchFolders()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(CURRENT_ITEM_KEY, binding.tabLayout.selectedTabPosition)
-        super.onSaveInstanceState(outState)
+    override fun onDestroy() {
+        saveSelectedFolderId()
+        super.onDestroy()
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        binding.tabLayout.post {
-            val currentPosition = savedInstanceState.getInt(CURRENT_ITEM_KEY)
-            binding.tabLayout.getTabAt(currentPosition)?.select()
-        }
-        super.onRestoreInstanceState(savedInstanceState)
+    private fun saveSelectedFolderId() {
+        val selectedPosition = binding.tabLayout.selectedTabPosition
+        val selectedFolderId = binding.tabLayout.getTabAt(selectedPosition)?.tag
+        (selectedFolderId as? Int)?.run { PrefUtil.selectedFolderId = this }
     }
 }
