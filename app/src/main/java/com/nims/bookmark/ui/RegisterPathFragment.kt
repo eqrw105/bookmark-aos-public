@@ -48,6 +48,10 @@ class RegisterPathFragment : BindingFragment<FragmentRegisterPathBinding>() {
             folderAdapter.clear()
             folderAdapter.addAll(it.filter { it.id != 1 })
         })
+
+        activity?.intent?.getStringExtra(URL_KEY)?.run {
+            binding.url.post { binding.url.setText(this) }
+        }
         return binding.root
     }
 

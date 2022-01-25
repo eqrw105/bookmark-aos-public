@@ -3,6 +3,7 @@ package com.nims.bookmark.ui
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
@@ -35,6 +36,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         }
         binding.tabLayout.removeOnTabSelectedListener(folderSelectedListener)
         binding.tabLayout.addOnTabSelectedListener(folderSelectedListener)
+
+        if (intent.action == Intent.ACTION_SEND && intent.type == "text/plain") {
+            val sendText = intent.getStringExtra(Intent.EXTRA_TEXT)?: ""
+            openRegister(sendText)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -67,8 +73,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         override fun onTabReselected(tab: TabLayout.Tab?) {}
     }
 
-    fun openRegister() {
+    fun openRegister(sendText: String? = null) {
         val intent = Intent(this, RegisterActivity::class.java)
+        sendText?.run {
+            intent.putExtra(RegisterPathFragment.URL_KEY, this)
+        }
         registerCallback.launch(intent)
     }
 
