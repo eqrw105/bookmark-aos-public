@@ -1,6 +1,7 @@
 package com.nims.bookmark.ui.main
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -14,6 +15,7 @@ import com.nims.bookmark.repository.RepositoryImpl
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
 import com.nims.bookmark.ui.detail.DetailActivity
+import com.nims.bookmark.ui.edit.EditActivity
 
 class MainViewModel(private val repository: RepositoryImpl) : ViewModel() {
     private val _paths: NotNullMutableLiveData<List<Path>> = NotNullMutableLiveData(arrayListOf())
@@ -58,32 +60,9 @@ class MainViewModel(private val repository: RepositoryImpl) : ViewModel() {
         repository.deletePath(path)
     }
 
-    val folderDeleteListener = View.OnLongClickListener {
+    val folderLongClickListener = View.OnLongClickListener {
         val context = it.context
-        (it as? TabLayout.TabView)?.tab?.let { tab ->
-            AlertDialog.Builder(context).apply {
-                val folderId = tab.tag
-                if (folderId == 1) {
-                    return@OnLongClickListener true
-                }
-                setTitle(tab.text)
-                setMessage(context.getString(R.string.main_folder_delete_message))
-                setPositiveButton(context.getString(R.string.main_folder_delete)) { _, _ ->
-                    (folderId as? Int)?.run {
-                        repository.deleteFolder(this)
-                        fetchFolders()
-                        Snackbar.make(
-                            it,
-                            context.getString(R.string.main_folder_delete_success),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-                setNegativeButton(context.getString(R.string.main_folder_delete_cancel), null)
-            }
-                .create()
-                .show()
-        }
+        (context as? MainActivity)?.openEdit()
         return@OnLongClickListener true
     }
 

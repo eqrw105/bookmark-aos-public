@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bookmark"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.edit.EditActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="${ADS_APPLICATION_ID}" />

@@ -9,6 +9,8 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.228125" />
         <entry key="app/src/main/res/drawable/ic_plus.xml" value="0.35384615384615387" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.2546875" />
+        <entry key="app/src/main/res/layout/activity_edit.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/activity_folder_edit.xml" value="0.28396739130434784" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_progress_bar.xml" value="0.28396739130434784" />
@@ -16,10 +18,12 @@
         <entry key="app/src/main/res/layout/fragment_register_item.xml" value="0.29030797101449274" />
         <entry key="app/src/main/res/layout/fragment_register_path.xml" value="0.22" />
         <entry key="app/src/main/res/layout/item_common_spinner.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_folder.xml" value="0.28396739130434784" />
         <entry key="app/src/main/res/layout/item_item_register.xml" value="0.29030797101449274" />
         <entry key="app/src/main/res/layout/item_path.xml" value="0.29471733086190915" />
         <entry key="app/src/main/res/layout/layout_toolbar.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/menu/detail_menu.xml" value="0.34322916666666664" />
+        <entry key="app/src/main/res/menu/edit_menu.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3177083333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3177083333333333" />

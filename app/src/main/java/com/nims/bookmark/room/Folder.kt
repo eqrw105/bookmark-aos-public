@@ -9,5 +9,5 @@ data class Folder(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "date") val date: Long,
-    @ColumnInfo(name = "lastUpdate") val lastUpdate: Long
+    @ColumnInfo(name = "lastUpdate") var lastUpdate: Long
 )

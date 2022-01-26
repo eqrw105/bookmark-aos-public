@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.nims.bookmark.ui.edit.EditViewModel" />
+
+        <variable
+            name="item"
+            type="com.nims.bookmark.room.Folder" />
+    </data>
+
+    <LinearLayout
+        style="@style/CommonItemContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{(v) -> viewModel.updateTitle(v, item)}"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/MainPathTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{item.title}" />
+
+    </LinearLayout>
+</layout>

@@ -20,6 +20,7 @@ import com.nims.bookmark.databinding.ActivityMainBinding
 import com.nims.bookmark.ext.replaceTitle
 import com.nims.bookmark.ext.setupActionBar
 import com.nims.bookmark.library.PrefUtil
+import com.nims.bookmark.ui.edit.EditActivity
 import com.nims.bookmark.ui.register.RegisterActivity
 import com.nims.bookmark.ui.register.RegisterPathFragment
 import com.nims.bookmark.ui.register.RegisterTabType
@@ -29,6 +30,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     companion object {
         const val REGISTER_DATA_KEY: String = "RegisterDataKey"
+        const val EDIT_DATA_KEY: String = "EditDataKey"
     }
 
     override fun getLayoutResId(): Int = R.layout.activity_main
@@ -145,5 +147,19 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         val selectedPosition = binding.tabLayout.selectedTabPosition
         val selectedFolderId = binding.tabLayout.getTabAt(selectedPosition)?.tag
         (selectedFolderId as? Int)?.run { PrefUtil.selectedFolderId = this }
+    }
+
+    private val editCallback =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode != RESULT_OK) {
+                return@registerForActivityResult
+            }
+            saveSelectedFolderId()
+            refreshFolders()
+        }
+
+    fun openEdit() {
+        val intent = Intent(this, EditActivity::class.java)
+        editCallback.launch(intent)
     }
 }

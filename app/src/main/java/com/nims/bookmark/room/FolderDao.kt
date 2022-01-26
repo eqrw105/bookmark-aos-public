@@ -1,13 +1,10 @@
 package com.nims.bookmark.room
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface FolderDao {
-    @Query("SELECT * FROM Folder")
+    @Query("SELECT * FROM Folder ORDER BY Folder.lastUpdate ASC")
     fun getAll(): List<Folder>
 
     @Insert
@@ -21,4 +18,7 @@ interface FolderDao {
 
     @Query("DELETE FROM Folder WHERE Folder.id == :folderId")
     fun delete(folderId: Int)
+
+    @Update
+    fun update(folder: Folder)
 }

@@ -13,6 +13,7 @@ interface Repository {
     fun deletePath(path: Path)
     fun updatePath(path: Path)
     fun deleteFolder(folderId: Int)
+    fun updateFolder(folder: Folder)
 }
 
 class RepositoryImpl(private val pathDao: PathDao, private val folderDao: FolderDao) : Repository {
@@ -32,5 +33,6 @@ class RepositoryImpl(private val pathDao: PathDao, private val folderDao: Folder
         pathDao.deleteFolderItemAll(folderId)
         folderDao.delete(folderId)
     }
+    override fun updateFolder(folder: Folder) = folderDao.update(folder)
 
 }

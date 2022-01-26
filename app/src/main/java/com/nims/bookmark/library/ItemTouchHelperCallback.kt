@@ -1,12 +1,13 @@
 package com.nims.bookmark.library
 
+import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 
 interface ItemTouchHelperListener {
-    fun onItemMoved(from: Int, to: Int)
-    fun onItemSwiped(position: Int)
+    fun onItemMoved(v: View, from: Int, to: Int)
+    fun onItemSwiped(v: View, position: Int)
 }
 
 class ItemTouchHelperCallback(val listener : ItemTouchHelperListener) : ItemTouchHelper.Callback() {
@@ -17,12 +18,12 @@ class ItemTouchHelperCallback(val listener : ItemTouchHelperListener) : ItemTouc
     }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-        listener.onItemMoved(viewHolder.adapterPosition, target.adapterPosition)
+        listener.onItemMoved(recyclerView, viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        listener.onItemSwiped(viewHolder.adapterPosition)
+        listener.onItemSwiped(viewHolder.itemView, viewHolder.adapterPosition)
     }
 
     override fun isLongPressDragEnabled(): Boolean {
