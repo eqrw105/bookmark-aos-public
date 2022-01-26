@@ -1,7 +1,5 @@
 package com.nims.bookmark.ui.main
 
-import android.app.AlertDialog
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,42 +44,7 @@ class PathAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<P
         notifyItemMoved(from, to)
     }
 
-    override fun onItemSwiped(v: View, position: Int) {
-        val item = items[position]
-        openAlert(v.context, item,
-            successCallback = {
-                viewModel.deletePath(items[position])
-                items.removeAt(position)
-                notifyItemRemoved(position)
-            },
-            failedCallback = {
-                notifyItemChanged(position)
-            }
-        )
-    }
-
-    private fun openAlert(
-        context: Context,
-        item: Path,
-        successCallback: () -> Unit,
-        failedCallback: () -> Unit
-    ) {
-        AlertDialog.Builder(context).apply {
-            setTitle(item.title)
-            setMessage(context.getString(R.string.main_path_delete_message))
-            setPositiveButton(context.getString(R.string.common_delete)) { _, _ ->
-                successCallback()
-            }
-            setNegativeButton(context.getString(R.string.common_cancel)) { _, _ ->
-                failedCallback()
-            }
-            setOnCancelListener {
-                failedCallback()
-            }
-        }
-            .create()
-            .show()
-    }
+    override fun onItemSwiped(v: View, position: Int) {}
 }
 
 class PathViewHolder(view: View) : BindingViewHolder<ItemPathBinding>(view)

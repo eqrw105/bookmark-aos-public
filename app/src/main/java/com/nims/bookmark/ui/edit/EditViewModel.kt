@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import androidx.core.view.setPadding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.nims.bookmark.R
 import com.nims.bookmark.library.NotNullMutableLiveData
 import com.nims.bookmark.library.dp2px
@@ -34,8 +35,48 @@ class EditViewModel(private val repository: RepositoryImpl) : ViewModel() {
         putResult(v.context)
     }
 
-    fun deleteFolder(folder: Folder) {
-        repository.deleteFolder(folder.id)
+    fun deleteFolder(v: View, folder: Folder) {
+        val context = v.context
+        if (folder.id == 1) {
+            Snackbar.make(
+                v,
+                context.getString(R.string.edit_default_folder_delete),
+                Snackbar.LENGTH_SHORT
+            ).show()
+            return
+        }
+        openAlert(context, folder,
+            successCallback = {
+                repository.deleteFolder(folder.id)
+                fetchFolders()
+                putResult(context)
+            },
+            failedCallback = {}
+        )
+
+    }
+
+    private fun openAlert(
+        context: Context,
+        item: Folder,
+        successCallback: () -> Unit,
+        failedCallback: () -> Unit
+    ) {
+        AlertDialog.Builder(context).apply {
+            setTitle(item.title)
+            setMessage(context.getString(R.string.main_folder_delete_message))
+            setPositiveButton(context.getString(R.string.common_delete)) { _, _ ->
+                successCallback()
+            }
+            setNegativeButton(context.getString(R.string.common_cancel)) { _, _ ->
+                failedCallback()
+            }
+            setOnCancelListener {
+                failedCallback()
+            }
+        }
+            .create()
+            .show()
     }
 
     fun updateTitle(v: View, item: Folder) {

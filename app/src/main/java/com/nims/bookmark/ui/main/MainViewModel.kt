@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.nims.bookmark.R
 import com.nims.bookmark.library.NotNullMutableLiveData
+import com.nims.bookmark.library.PrefUtil
 import com.nims.bookmark.repository.RepositoryImpl
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
@@ -56,8 +57,37 @@ class MainViewModel(private val repository: RepositoryImpl) : ViewModel() {
         repository.updatePath(toItem)
     }
 
-    fun deletePath(path: Path) {
-        repository.deletePath(path)
+    fun deletePath(v: View, path: Path) {
+        openAlert(v.context, path,
+            successCallback = {
+                repository.deletePath(path)
+                fetchPaths(PrefUtil.selectedFolderId)
+            },
+            failedCallback = {}
+        )
+    }
+
+    private fun openAlert(
+        context: Context,
+        item: Path,
+        successCallback: () -> Unit,
+        failedCallback: () -> Unit
+    ) {
+        AlertDialog.Builder(context).apply {
+            setTitle(item.title)
+            setMessage(context.getString(R.string.main_path_delete_message))
+            setPositiveButton(context.getString(R.string.common_delete)) { _, _ ->
+                successCallback()
+            }
+            setNegativeButton(context.getString(R.string.common_cancel)) { _, _ ->
+                failedCallback()
+            }
+            setOnCancelListener {
+                failedCallback()
+            }
+        }
+            .create()
+            .show()
     }
 
     val folderLongClickListener = View.OnLongClickListener {

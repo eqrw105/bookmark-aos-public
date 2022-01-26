@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -12,18 +13,31 @@
             type="com.nims.bookmark.room.Folder" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/CommonItemContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{(v) -> viewModel.updateTitle(v, item)}"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
             style="@style/MainPathTitleTextView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{item.title}" />
+            android:text="@{item.title}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            style="@style/EditFolderDeleteImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:onClick="@{(v) -> viewModel.deleteFolder(v, item)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

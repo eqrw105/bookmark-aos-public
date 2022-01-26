@@ -94,10 +94,15 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="MainPathContainer" parent="Theme.Bookmark">
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+
     <style name="MainPathTitleTextView" parent="Theme.Bookmark">
         <item name="android:textSize">18sp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginRight">8dp</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/black</item>
     </style>
@@ -118,5 +123,9 @@
         <item name="android:layout_gravity">center|bottom</item>
         <item name="android:layout_marginBottom">30dp</item>
         <item name="android:src">@drawable/ic_circle_arrow_top</item>
+    </style>
+
+    <style name="EditFolderDeleteImageView" parent="Theme.Bookmark">
+        <item name="android:src">@drawable/ic_delete</item>
     </style>
 </resources>
