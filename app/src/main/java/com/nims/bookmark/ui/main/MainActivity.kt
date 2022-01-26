@@ -6,8 +6,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.initialization.InitializationStatus
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import com.nims.bookmark.BuildConfig
 import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingActivity
 import com.nims.bookmark.databinding.ActivityMainBinding
@@ -29,6 +35,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MobileAds.initialize(this)
+        binding.adView.loadAd(AdRequest.Builder().build())
+
         binding.lifecycleOwner = this
         binding.viewModel = getViewModel()
         setupActionBar(R.id.toolbar)

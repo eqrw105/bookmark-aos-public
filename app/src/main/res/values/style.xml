@@ -34,6 +34,7 @@
         <item name="android:layout_marginEnd">30dp</item>
         <item name="android:layout_marginRight">30dp</item>
         <item name="android:layout_marginBottom">50dp</item>
+        <item name="android:src">@drawable/ic_plus</item>
         <item name="layout_anchor">@id/container</item>
         <item name="layout_anchorGravity">bottom|end</item>
     </style>

@@ -3,8 +3,18 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
 }
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
+    signingConfigs {
+        release {
+            storeFile file(properties['STORE_FILE_PATH'])
+            storePassword properties['STORE_PASSWORD']
+            keyAlias properties['KEY_ALIAS']
+            keyPassword properties['KEY_PASSWORD']
+        }
+    }
     compileSdk 32
 
     defaultConfig {
@@ -13,7 +23,7 @@ android {
         targetSdk 32
         versionCode 100
         versionName "1.0.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -22,6 +32,15 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders["ADS_APPLICATION_ID"] = properties['ADS_APPLICATION_ID']
+            resValue "string", "ADS_UNIT_ID", properties['ADS_UNIT_ID']
+
+            signingConfig signingConfigs.release
+        }
+        debug {
+            debuggable true
+            manifestPlaceholders["ADS_APPLICATION_ID"] = properties['ADS_APPLICATION_TEST_ID']
+            resValue "string", "ADS_UNIT_ID", properties['ADS_UNIT_TEST_ID']
         }
     }
     compileOptions {
@@ -57,4 +76,9 @@ dependencies {
     def room_version = "2.4.1"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    def ads_version = "20.5.0"
+    implementation "com.google.android.gms:play-services-ads:$ads_version"
+
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
