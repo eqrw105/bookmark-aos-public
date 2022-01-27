@@ -59,7 +59,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
         val folderIdList: ArrayList<Int> = arrayListOf()
         val folderList: ArrayList<CharSequence> = arrayListOf()
-        binding.viewModel?.getFolderList()?.filter { it.id != 1 }?.withIndex()?.forEach {
+        val folders = binding.viewModel?.getFolderList()?.filter { it.id != 1 }
+        if (folders.isNullOrEmpty()) {
+            Snackbar.make(binding.root, getString(R.string.main_create_path_not_find_folder), Snackbar.LENGTH_SHORT).show()
+            return
+        }
+        folders.withIndex().forEach {
             folderIdList.add(it.index, it.value.id)
             folderList.add(it.index, it.value.title)
         }
@@ -68,7 +73,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
                 PrefUtil.selectedFolderId = folderIdList[i]
                 selectFolder()
                 createPath(url = sendText)
-            }.create().show()
+            }
+            .setCancelable(false)
+            .create()
+            .show()
     }
 
     private fun createFolder(title: String = "") {
@@ -91,7 +99,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
                 lastUpdate = date
             )
             binding.viewModel?.createFolder(folder)
-            PrefUtil.selectedFolderId = binding.viewModel?.getNewFolderId() ?: 0
+            PrefUtil.selectedFolderId = binding.viewModel?.getNewFolderId() ?: 1
             refreshFolders()
             Snackbar.make(
                 binding.root,
@@ -212,21 +220,27 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     private val folderSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
-            val tabCount = binding.tabLayout.tabCount
-            val folderId = tab?.tag
-            (folderId as? Int)?.run {
-                if (tabCount > 1) {
-                    binding.tabLayout.post {
-                        PrefUtil.selectedFolderId = folderId
-                        refreshPaths()
-                        menu?.findItem(R.id.createPath)?.isVisible = folderId != 1
-                    }
-                }
-            }
+           selectTab(tab)
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
-        override fun onTabReselected(tab: TabLayout.Tab?) {}
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+            selectTab(tab)
+        }
+    }
+
+    private fun selectTab(tab: TabLayout.Tab?) {
+        val tabCount = binding.tabLayout.tabCount
+        val folderId = tab?.tag
+        (folderId as? Int)?.run {
+            if (tabCount > 0) {
+                binding.tabLayout.post {
+                    PrefUtil.selectedFolderId = folderId
+                    refreshPaths()
+                    menu?.findItem(R.id.createPath)?.isVisible = folderId != 1
+                }
+            }
+        }
     }
 
     private fun refreshPaths() {

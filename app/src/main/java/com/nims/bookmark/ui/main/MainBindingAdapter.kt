@@ -41,8 +41,9 @@ fun setFolders(view: TabLayout, items: List<Folder>, viewModel: MainViewModel) {
             addTab(newTab)
             //탭 선택했던 기록 자동 선택
             if (it.value.id == PrefUtil.selectedFolderId) {
-                newTab.select()
-                post { scrollTo(newTab.view.left, 0) }
+                post {
+                    newTab.select()
+                }
             }
         }
     }
