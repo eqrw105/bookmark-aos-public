@@ -2,6 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/createPath"
+        android:icon="@drawable/ic_add"
+        android:title=""
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/createFolder"
+        android:icon="@drawable/ic_folder"
+        android:title=""
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/help"
         android:icon="@drawable/ic_help"
         android:title=""

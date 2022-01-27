@@ -7,6 +7,9 @@ interface FolderDao {
     @Query("SELECT * FROM Folder ORDER BY Folder.lastUpdate ASC")
     fun getAll(): List<Folder>
 
+    @Query("SELECT * FROM Folder ORDER BY Folder.date ASC")
+    fun getAllWhereDate(): List<Folder>
+
     @Insert
     fun insertAll(vararg folders: Folder)
 

@@ -7,8 +7,6 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayout
 import com.nims.bookmark.R
 import com.nims.bookmark.library.NotNullMutableLiveData
 import com.nims.bookmark.library.PrefUtil
@@ -16,7 +14,7 @@ import com.nims.bookmark.repository.RepositoryImpl
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
 import com.nims.bookmark.ui.detail.DetailActivity
-import com.nims.bookmark.ui.edit.EditActivity
+import java.util.*
 
 class MainViewModel(private val repository: RepositoryImpl) : ViewModel() {
     private val _paths: NotNullMutableLiveData<List<Path>> = NotNullMutableLiveData(arrayListOf())
@@ -37,10 +35,19 @@ class MainViewModel(private val repository: RepositoryImpl) : ViewModel() {
         _folders.postValue(repository.getFolders())
     }
 
-    fun openRegister(v: View) {
-        val context = v.context
-        (context as? MainActivity)?.openRegister()
+    fun getFolderList(): List<Folder> {
+        return repository.getFolders()
     }
+
+    fun createPath(path: Path) {
+        repository.insertPath(path)
+    }
+
+    fun createFolder(folder: Folder) {
+        repository.insertFolder(folder)
+    }
+
+    fun getNewFolderId() = repository.getFoldersWhereDate().last().id
 
     fun openPath(v: View, item: Path) {
         val context = v.context

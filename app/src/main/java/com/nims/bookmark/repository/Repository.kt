@@ -14,6 +14,7 @@ interface Repository {
     fun updatePath(path: Path)
     fun deleteFolder(folderId: Int)
     fun updateFolder(folder: Folder)
+    fun getFoldersWhereDate(): List<Folder>
 }
 
 class RepositoryImpl(private val pathDao: PathDao, private val folderDao: FolderDao) : Repository {
@@ -34,5 +35,6 @@ class RepositoryImpl(private val pathDao: PathDao, private val folderDao: Folder
         folderDao.delete(folderId)
     }
     override fun updateFolder(folder: Folder) = folderDao.update(folder)
+    override fun getFoldersWhereDate(): List<Folder> = folderDao.getAllWhereDate()
 
 }
