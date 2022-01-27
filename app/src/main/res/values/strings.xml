@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TRIP</string>
     <string name="app_tutorial">
-        \n\nQ1. TRIP은 어떤 앱 인가요?\nA1. 자신이 즐겨찾는 홈페이지 주소(URL)를 폴더 별 게시물로 등록하여 편리하게 해당 홈페이지를 접속 할 수 있도록 도와주는 앱 이에요\n\nQ2. 게시물은 어떻게 추가하나요?\nA2. 메인화면 우측 하단의 게시물 추가 버튼을 눌러서 자신만의 기록을 남겨주세요.\n\nQ3. 폴더는 어떻게 수정하나요?\nA3. 메인화면 폴더 이름을 꾹 눌러서 수정 페이지로 이동 할 수 있어요.\n\nQ4. 게시물은 어떻게 수정하나요?\nQ4. 게시물을 꾹 눌러서 순서를 변경하거나 옆으로 슬라이드하여 삭제 할 수 있어요.\n\n
+        \n\nQ1. TRIP은 어떤 앱 인가요?\nA1. 자신이 즐겨찾는 홈페이지 주소(URL)를 폴더 별 게시물로 등록하여 편리하게 해당 홈페이지를 접속 할 수 있도록 도와주는 앱 이에요.\n\nQ2. 게시물은 어떻게 추가하나요?\nA2. 메인화면 우측 상단의 옵션 버튼을 눌러서 폴더를 만들고 자신만의 기록을 남겨주세요.\n\nQ3. 폴더는 어떻게 수정하나요?\nA3. 메인화면 우측 상단의 설정 버튼을 눌러서 이동 할 수 있어요.\n\nQ4. 게시물과 폴더 위치는 어떻게 수정하나요?\nA4. 게시물 혹은 설정 페이지의 폴더를 꾹 눌러서 순서를 변경 할 수 있어요.\n\n
     </string>
     <string name="common_all">전체</string>
     <string name="common_done">확인</string>
@@ -17,7 +17,7 @@
 
     <string name="main_create_path_title">게시물 추가</string>
     <string name="main_create_path_title_hint">제목</string>
-    <string name="main_create_path_url_hint">URL</string>
+    <string name="main_create_path_url_hint">https://example.com</string>
     <string name="main_create_path_success">게시물을 추가했습니다.</string>
     <string name="main_create_path_not_find_folder">폴더를 생성해주세요.</string>
     <string name="main_create_path_url_error">올바르지 않은 URL 입니다.</string>
@@ -29,12 +29,12 @@
     <string name="main_path_delete_message">게시물을 삭제 하시겠습니까?</string>
 
     <!-- EditActivity 폴더 수정 페이지 -->
-    <string name="edit_title">폴더 수정</string>
-    <string name="edit_folder_update_title">폴더 이름 변경</string>
+    <string name="edit_title">설정</string>
+    <string name="edit_folder_update">폴더 수정</string>
+    <string name="edit_callback_title">동작 설정</string>
+    <string name="edit_callback_view">내부에서 열기</string>
+    <string name="edit_callback_browser">브라우저로 열기</string>
     <string name="edit_folder_update_hint">@string/main_create_path_title_hint</string>
     <string name="edit_default_folder_delete">기본 폴더는 삭제가 불가능 합니다.</string>
-    <string name="edit_tutorial_title">폴더 수정 방법</string>
-    <string name="edit_tutorial">
-        \n\nQ1. 폴더 삭제는 어떻게 하나요?\nA1. 삭제 할 폴더를 옆으로 슬라이드하여 삭제 할 수 있어요.\n\nQ2. 폴더 이름은 어떻게 수정하나요?\nA2. 메인화면 폴더 이름을 선택하여 이름 변경을 할 수 있어요.\n\nQ3. 폴더 순서는 어떻게 바꾸나요?\nQ3. 폴더 이름을 꾹 눌러서 위, 아래로 드래그하여 순서를 변경 할 수 있어요.\n\n
-    </string>
+    <string name="edit_folder_update_title">폴더 이름 변경</string>
 </resources>

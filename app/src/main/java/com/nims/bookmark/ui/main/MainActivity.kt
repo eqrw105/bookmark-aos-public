@@ -192,9 +192,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.help -> showHelp()
+            R.id.setting -> openEdit()
             R.id.createFolder -> createFolder()
             R.id.createPath -> createPath()
+            R.id.help -> showHelp()
         }
         return super.onOptionsItemSelected(item)
     }

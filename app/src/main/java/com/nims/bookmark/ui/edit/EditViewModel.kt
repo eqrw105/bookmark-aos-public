@@ -7,12 +7,14 @@ import android.content.Intent
 import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.RadioGroup
 import androidx.core.view.setPadding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.nims.bookmark.R
 import com.nims.bookmark.library.NotNullMutableLiveData
+import com.nims.bookmark.library.PrefUtil
 import com.nims.bookmark.library.dp2px
 import com.nims.bookmark.repository.RepositoryImpl
 import com.nims.bookmark.room.Folder
@@ -103,10 +105,24 @@ class EditViewModel(private val repository: RepositoryImpl) : ViewModel() {
             .show()
     }
 
-    fun putResult(context: Context) {
+    private fun putResult(context: Context) {
         (context as? EditActivity)?.apply {
             val intent = Intent()
             setResult(RESULT_OK, intent)
+        }
+    }
+
+    fun setBrowserMode(v: View, isChecked: Boolean) {
+        if (!isChecked) {
+            return
+        }
+        when(v.id) {
+            R.id.browserModeBrowser -> {
+                PrefUtil.browserMode = 0
+            }
+            R.id.browserModeView -> {
+                PrefUtil.browserMode = 1
+            }
         }
     }
 }

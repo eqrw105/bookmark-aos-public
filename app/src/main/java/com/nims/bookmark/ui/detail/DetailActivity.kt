@@ -91,27 +91,4 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>() {
         }
         super.onBackPressed()
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.detail_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.share -> openShare()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun openShare() {
-        val intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            val message = path?.url?: ""
-            putExtra(Intent.EXTRA_TEXT, message)
-            type = "text/plain"
-        }
-        val shareIntent = Intent.createChooser(intent, null)
-        startActivity(shareIntent)
-    }
 }

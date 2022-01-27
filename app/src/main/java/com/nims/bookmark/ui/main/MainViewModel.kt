@@ -3,7 +3,9 @@ package com.nims.bookmark.ui.main
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.View
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
@@ -51,9 +53,20 @@ class MainViewModel(private val repository: RepositoryImpl) : ViewModel() {
 
     fun openPath(v: View, item: Path) {
         val context = v.context
-        val intent = Intent(context, DetailActivity::class.java)
-        intent.putExtra(DetailActivity.PATH_ITEM_KEY, item)
-        context.startActivity(intent)
+        if (PrefUtil.browserMode == 0) {
+            Intent().apply {
+                action = Intent.ACTION_VIEW
+                data = item.url.toUri()
+            }.run {
+                context.startActivity(this)
+            }
+        } else {
+            Intent(context, DetailActivity::class.java).apply {
+                putExtra(DetailActivity.PATH_ITEM_KEY, item)
+            }.run {
+                context.startActivity(this)
+            }
+        }
     }
 
     fun updatePath(fromItem: Path, toItem: Path) {
@@ -72,6 +85,17 @@ class MainViewModel(private val repository: RepositoryImpl) : ViewModel() {
             },
             failedCallback = {}
         )
+    }
+
+    fun sharePath(v: View, path: Path) {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            val message = path.url
+            putExtra(Intent.EXTRA_TEXT, message)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(intent, null)
+        v.context.startActivity(shareIntent)
     }
 
     private fun openAlert(
@@ -95,12 +119,6 @@ class MainViewModel(private val repository: RepositoryImpl) : ViewModel() {
         }
             .create()
             .show()
-    }
-
-    val folderLongClickListener = View.OnLongClickListener {
-        val context = it.context
-        (context as? MainActivity)?.openEdit()
-        return@OnLongClickListener true
     }
 
     val onScrollListener = object : RecyclerView.OnScrollListener() {

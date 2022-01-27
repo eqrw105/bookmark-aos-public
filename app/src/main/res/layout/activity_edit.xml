@@ -17,15 +17,58 @@
 
         <include layout="@layout/layout_toolbar" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/folderList"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:folders="@{viewModel.folders}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            app:viewModel="@{viewModel}" />
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <TextView
+                style="@style/CommonTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_callback_title" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/browserModeBrowser"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onCheckedChanged="@{(v, b) -> viewModel.setBrowserMode(v, b)}"
+                    android:text="@string/edit_callback_browser"/>
+
+                <RadioButton
+                    android:id="@+id/browserModeView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onCheckedChanged="@{(v, b) -> viewModel.setBrowserMode(v, b)}"
+                    android:text="@string/edit_callback_view"/>
+
+            </RadioGroup>
+
+
+            <TextView
+                style="@style/CommonTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_folder_update" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/folderList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:folders="@{viewModel.folders}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:viewModel="@{viewModel}" />
+        </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

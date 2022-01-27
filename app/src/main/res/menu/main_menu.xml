@@ -6,15 +6,20 @@
         android:icon="@drawable/ic_add"
         android:title=""
         android:visible="false"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/createFolder"
         android:icon="@drawable/ic_folder"
         android:title=""
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/ic_settings"
+        android:title=""
+        app:showAsAction="always" />
     <item
         android:id="@+id/help"
         android:icon="@drawable/ic_help"
         android:title=""
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

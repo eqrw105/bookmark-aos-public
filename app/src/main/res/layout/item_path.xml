@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -25,7 +26,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintEnd_toStartOf="@+id/optionContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -42,15 +43,37 @@
                 android:text="@{item.url}" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageView"
-            style="@style/EditFolderDeleteImageView"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:onClick="@{(v) -> viewModel.deletePath(v, item)}"
+        <LinearLayout
+            android:id="@+id/optionContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                style="@style/EditFolderShareImageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:onClick="@{(v) -> viewModel.sharePath(v, item)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                style="@style/EditFolderDeleteImageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:onClick="@{(v) -> viewModel.deletePath(v, item)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

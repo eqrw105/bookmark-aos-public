@@ -1,6 +1,5 @@
 package com.nims.bookmark.ui.main
 
-import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -40,9 +39,6 @@ fun setFolders(view: TabLayout, items: List<Folder>, viewModel: MainViewModel) {
         view.apply {
             val newTab = this.newTab().setTag(it.value.id).setText(it.value.title)
             addTab(newTab)
-            (this.getChildAt(0) as? ViewGroup)?.run {
-                this.getChildAt(it.index)?.setOnLongClickListener(viewModel.folderLongClickListener)
-            }
             //탭 선택했던 기록 자동 선택
             if (it.value.id == PrefUtil.selectedFolderId) {
                 newTab.select()
