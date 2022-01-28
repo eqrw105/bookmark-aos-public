@@ -8,6 +8,10 @@
         <variable
             name="viewModel"
             type="com.nims.bookmark.ui.edit.EditViewModel" />
+
+        <variable
+            name="listener"
+            type="com.nims.bookmark.listener.OnEditFolderClickListener" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -67,7 +71,8 @@
                 android:orientation="vertical"
                 app:folders="@{viewModel.folders}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:viewModel="@{viewModel}" />
+                app:viewModel="@{viewModel}"
+                app:itemListener="@{listener}"/>
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

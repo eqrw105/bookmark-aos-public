@@ -6,23 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingDialogFragment
-import com.nims.bookmark.databinding.FragmentCreateFolderBinding
-import com.nims.bookmark.listener.OnCreateFolderClickListener
+import com.nims.bookmark.databinding.FragmentUpdateFolderBinding
+import com.nims.bookmark.listener.OnUpdateFolderClickListener
 import com.nims.bookmark.room.Folder
-import java.util.*
 
-class ARTCreateFolderDialogFragment : BindingDialogFragment<FragmentCreateFolderBinding>(),
+class ARTUpdateFolderDialogFragment : BindingDialogFragment<FragmentUpdateFolderBinding>(),
     View.OnClickListener {
 
-    override fun getLayoutResId(): Int = R.layout.fragment_create_folder
-    private var listener: OnCreateFolderClickListener? = null
+    override fun getLayoutResId(): Int = R.layout.fragment_update_folder
+    private var listener: OnUpdateFolderClickListener? = null
+    private var folder: Folder? = null
 
     companion object {
-        const val TAG = "ARTCreateFolderDialogFragment"
+        const val TAG = "ARTUpdateFolderDialogFragment"
 
         @JvmStatic
-        fun newInstance(listener: OnCreateFolderClickListener) =
-            ARTCreateFolderDialogFragment().apply {
+        fun newInstance(folder: Folder, listener: OnUpdateFolderClickListener) =
+            ARTUpdateFolderDialogFragment().apply {
                 isCancelable = false
                 this.listener = listener
             }
@@ -36,23 +36,19 @@ class ARTCreateFolderDialogFragment : BindingDialogFragment<FragmentCreateFolder
         super.onCreateView(inflater, container, savedInstanceState)
         binding.done.setOnClickListener(this)
         binding.cancel.setOnClickListener(this)
+        binding.title.setText(folder?.title ?: "")
         return binding.root
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.done -> listener?.onCreateFolder(createFolder())
+            R.id.done -> updateFolder()?.run { listener?.onUpdateFolder(this) }
         }
         dismiss()
     }
 
-    private fun createFolder(): Folder {
+    private fun updateFolder(): Folder? {
         val title = binding.title.text.toString()
-        val date = Calendar.getInstance().time.time
-        return Folder(
-            title = title,
-            date = date,
-            lastUpdate = date
-        )
+        return folder?.copy(title = title)
     }
 }

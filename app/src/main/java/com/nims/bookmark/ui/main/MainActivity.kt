@@ -3,12 +3,10 @@ package com.nims.bookmark.ui.main
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
-import androidx.core.view.doOnLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.tabs.TabLayout
@@ -18,6 +16,8 @@ import com.nims.bookmark.databinding.ActivityMainBinding
 import com.nims.bookmark.ext.*
 import com.nims.bookmark.library.BrowserModeType
 import com.nims.bookmark.library.PrefUtil
+import com.nims.bookmark.listener.OnCreateFolderClickListener
+import com.nims.bookmark.listener.OnCreatePathClickListener
 import com.nims.bookmark.listener.OnPathClickListener
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
@@ -27,16 +27,8 @@ import com.nims.bookmark.ui.edit.EditActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.util.*
 
-interface OnCreateFolderClickListener {
-    fun onCreateFolder(folder: Folder)
-}
-
-interface OnCreatePathClickListener {
-    fun onCreatePath(path: Path)
-    fun onCreatePathFailed(createPathFailedType: CreatePathFailedType)
-}
-
-class MainActivity : BindingActivity<ActivityMainBinding>(), OnCreateFolderClickListener, OnCreatePathClickListener,
+class MainActivity : BindingActivity<ActivityMainBinding>(), OnCreateFolderClickListener,
+    OnCreatePathClickListener,
     OnPathClickListener {
 
     private var menu: Menu? = null

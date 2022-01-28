@@ -11,13 +11,17 @@
         <variable
             name="item"
             type="com.nims.bookmark.room.Folder" />
+
+        <variable
+            name="listener"
+            type="com.nims.bookmark.listener.OnEditFolderClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/CommonItemContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{(v) -> viewModel.updateTitle(v, item)}"
+        android:onClick="@{(v) -> listener.onFolderClick(item)}"
         android:orientation="horizontal">
 
         <TextView
@@ -35,7 +39,7 @@
             style="@style/EditFolderDeleteImageView"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:onClick="@{(v) -> viewModel.deleteFolder(v, item)}"
+            android:onClick="@{(v) -> listener.onFolderDelete(item)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

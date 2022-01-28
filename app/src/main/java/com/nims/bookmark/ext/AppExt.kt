@@ -5,11 +5,11 @@ import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.nims.bookmark.listener.OnCreateFolderClickListener
+import com.nims.bookmark.listener.OnCreatePathClickListener
 import com.nims.bookmark.ui.dialog.ARTCreateFolderDialogFragment
 import com.nims.bookmark.ui.dialog.ARTCreatePathDialogFragment
 import com.nims.bookmark.ui.dialog.ARTProgressDialogFragment
-import com.nims.bookmark.ui.main.OnCreateFolderClickListener
-import com.nims.bookmark.ui.main.OnCreatePathClickListener
 
 fun AppCompatActivity.setupActionBar(@IdRes toolbarId: Int) {
     setSupportActionBar(findViewById(toolbarId))

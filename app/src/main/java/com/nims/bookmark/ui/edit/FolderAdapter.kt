@@ -9,9 +9,10 @@ import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingViewHolder
 import com.nims.bookmark.databinding.ItemFolderBinding
 import com.nims.bookmark.library.ItemTouchHelperListener
+import com.nims.bookmark.listener.OnEditFolderClickListener
 import com.nims.bookmark.room.Folder
 
-class FolderAdapter(private val viewModel: EditViewModel) :
+class FolderAdapter(private val viewModel: EditViewModel, private val listener: OnEditFolderClickListener) :
     RecyclerView.Adapter<FolderViewHolder>(),
     ItemTouchHelperListener {
     var items: MutableList<Folder> = arrayListOf()
@@ -32,6 +33,7 @@ class FolderAdapter(private val viewModel: EditViewModel) :
         val item = items[position].apply {
             holder.binding.item = this
             holder.binding.viewModel = viewModel
+            holder.binding.listener = listener
         }
     }
 
@@ -39,7 +41,7 @@ class FolderAdapter(private val viewModel: EditViewModel) :
 
 
     override fun onItemMoved(v: View, from: Int, to: Int) {
-        viewModel.updateFolder(v, items[from], items[to])
+        listener.onFolderMove(items[from], items[to])
         val fromItem = items.removeAt(from)
         items.add(to, fromItem)
         notifyItemMoved(from, to)
