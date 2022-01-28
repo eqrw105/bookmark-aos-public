@@ -1,13 +1,14 @@
-package com.nims.bookmark.library
+package com.nims.bookmark.ui.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.nims.bookmark.R
+import com.nims.bookmark.core.BindingDialogFragment
+import com.nims.bookmark.databinding.FragmentProgressBarBinding
 
-class ARTProgressDialogFragment : DialogFragment() {
+class ARTProgressDialogFragment : BindingDialogFragment<FragmentProgressBarBinding>() {
     companion object {
         const val TAG = "ARTProgressDialogFragment"
 
@@ -21,7 +22,10 @@ class ARTProgressDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_progress_bar, container, false)
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+        return binding.root
     }
+
+    override fun getLayoutResId(): Int = R.layout.fragment_progress_bar
 }

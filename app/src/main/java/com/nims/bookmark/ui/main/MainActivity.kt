@@ -1,34 +1,43 @@
 package com.nims.bookmark.ui.main
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.webkit.URLUtil
-import android.widget.EditText
-import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.setPadding
+import androidx.core.net.toUri
+import androidx.core.view.doOnLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingActivity
 import com.nims.bookmark.databinding.ActivityMainBinding
-import com.nims.bookmark.ext.replaceTitle
-import com.nims.bookmark.ext.setupActionBar
+import com.nims.bookmark.ext.*
+import com.nims.bookmark.library.BrowserModeType
 import com.nims.bookmark.library.PrefUtil
-import com.nims.bookmark.library.dp2px
+import com.nims.bookmark.listener.OnPathClickListener
 import com.nims.bookmark.room.Folder
 import com.nims.bookmark.room.Path
+import com.nims.bookmark.ui.detail.DetailActivity
+import com.nims.bookmark.ui.dialog.CreatePathFailedType
 import com.nims.bookmark.ui.edit.EditActivity
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.util.*
 
-class MainActivity : BindingActivity<ActivityMainBinding>() {
+interface OnCreateFolderClickListener {
+    fun onCreateFolder(folder: Folder)
+}
+
+interface OnCreatePathClickListener {
+    fun onCreatePath(path: Path)
+    fun onCreatePathFailed(createPathFailedType: CreatePathFailedType)
+}
+
+class MainActivity : BindingActivity<ActivityMainBinding>(), OnCreateFolderClickListener, OnCreatePathClickListener,
+    OnPathClickListener {
 
     private var menu: Menu? = null
 
@@ -38,14 +47,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         MobileAds.initialize(this)
         binding.adView.loadAd(AdRequest.Builder().build())
-
+        binding.listener = this
         binding.lifecycleOwner = this
         binding.viewModel = getViewModel()
         setupActionBar(R.id.toolbar)
         replaceTitle(R.string.app_name)
-        savedInstanceState ?: run {
-            binding.viewModel?.fetchFolders()
-        }
+        refreshFolders()
         binding.tabLayout.removeOnTabSelectedListener(folderSelectedListener)
         binding.tabLayout.addOnTabSelectedListener(folderSelectedListener)
 
@@ -57,139 +64,40 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     private fun sendCallback() {
         val sendText = intent.getStringExtra(Intent.EXTRA_TEXT) ?: ""
 
-        val folderIdList: ArrayList<Int> = arrayListOf()
-        val folderList: ArrayList<CharSequence> = arrayListOf()
         val folders = binding.viewModel?.getFolderList()?.filter { it.id != 1 }
         if (folders.isNullOrEmpty()) {
-            Snackbar.make(binding.root, getString(R.string.main_create_path_not_find_folder), Snackbar.LENGTH_SHORT).show()
+            showSnackBar(getString(R.string.main_create_path_not_find_folder))
             return
         }
-        folders.withIndex().forEach {
-            folderIdList.add(it.index, it.value.id)
-            folderList.add(it.index, it.value.title)
-        }
+        showSelectFolder(folders, sendText)
+    }
+
+    private fun showSelectFolder(folders: List<Folder>, sendText: String) {
+        val folderTitleList = folders.associateWith { it.title }.values.toTypedArray()
+        val folderIdList = folders.associateWith { it.id }.values.toTypedArray()
+
         AlertDialog.Builder(this).setTitle(getString(R.string.main_share_folder_title))
-            .setItems(folderList.toTypedArray()) { _, i ->
+            .setItems(folderTitleList) { _, i ->
                 PrefUtil.selectedFolderId = folderIdList[i]
-                selectFolder()
-                createPath(url = sendText)
+                findSelectedTab()?.select()
+                showCreatePath("", sendText, this)
             }
             .setCancelable(false)
             .create()
             .show()
     }
 
-    private fun createFolder(title: String = "") {
-        val editText = EditText(this@MainActivity).apply {
-            setText(title)
-            hint = getString(R.string.main_create_folder_hint)
-        }
-
-        val container = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(dp2px(20f).toInt())
-            addView(editText)
-        }
-
-        val positiveCallback = DialogInterface.OnClickListener { _, _ ->
-            val date = Calendar.getInstance().time.time
-            val folder = Folder(
-                title = (container.getChildAt(0) as? EditText)?.text.toString(),
-                date = date,
-                lastUpdate = date
-            )
-            binding.viewModel?.createFolder(folder)
-            PrefUtil.selectedFolderId = binding.viewModel?.getNewFolderId() ?: 1
-            refreshFolders()
-            Snackbar.make(
-                binding.root,
-                getString(R.string.main_create_folder_success),
-                Snackbar.LENGTH_SHORT
-            ).show()
-        }
-
-        AlertDialog.Builder(this).apply {
-            setTitle(getString(R.string.main_create_folder_title))
-            setPositiveButton(getString(R.string.common_add), positiveCallback)
-            setNegativeButton(getString(R.string.common_cancel), null)
-            setView(container)
-        }.create().show()
-    }
-
-    private fun createPath(title: String = "", url: String = "") {
-        val titleEditText = EditText(this@MainActivity).apply {
-            setText(title)
-            hint = getString(R.string.main_create_path_title_hint)
-        }
-        val urlEditText = EditText(this@MainActivity).apply {
-            setText(url)
-            hint = getString(R.string.main_create_path_url_hint)
-        }
-
-        val container = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(dp2px(20f).toInt())
-            addView(titleEditText)
-            addView(urlEditText)
-        }
-
-        val positiveCallback = DialogInterface.OnClickListener { _, _ ->
-            //url 프로토콜 형식 체크
-            val title = titleEditText.text.toString()
-            val url = urlEditText.text.toString()
-            val isValidUrl = URLUtil.isValidUrl(url) && url.isNotBlank()
-            if (!isValidUrl) {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.main_create_path_url_error),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-                return@OnClickListener
-            }
-            val date = Calendar.getInstance().time.time
-            val folderId = PrefUtil.selectedFolderId
-            if (folderId == 1) {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.main_create_path_not_find_folder),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-                return@OnClickListener
-            }
-            val path = Path(
-                title = title,
-                url = url,
-                folderId = folderId,
-                date = date,
-                lastUpdate = date
-            )
-            binding.viewModel?.createPath(path)
-            refreshPaths()
-            Snackbar.make(
-                binding.root,
-                getString(R.string.main_create_path_success),
-                Snackbar.LENGTH_SHORT
-            ).show()
-        }
-
-        AlertDialog.Builder(this).apply {
-            setTitle(getString(R.string.main_create_folder_title))
-            setPositiveButton(getString(R.string.common_add), positiveCallback)
-            setNegativeButton(getString(R.string.common_cancel), null)
-            setView(container)
-        }.create().show()
-    }
-
-    private fun selectFolder() {
+    private fun findSelectedTab(): TabLayout.Tab? {
         binding.tabLayout.run {
             val len = tabCount
             for (i in 0 until len) {
                 val tab = getTabAt(i)
                 if (tab?.tag == PrefUtil.selectedFolderId) {
-                    selectTab(tab)
+                    return tab
                 }
             }
         }
+        return null
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -201,8 +109,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.setting -> openEdit()
-            R.id.createFolder -> createFolder()
-            R.id.createPath -> createPath()
+            R.id.createFolder -> showCreateFolder(this)
+            R.id.createPath -> showCreatePath("", "", this)
             R.id.help -> showHelp()
         }
         return super.onOptionsItemSelected(item)
@@ -220,25 +128,23 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
 
     private val folderSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
-           selectTab(tab)
+            tabSelectCallback(tab)
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
         override fun onTabReselected(tab: TabLayout.Tab?) {
-            selectTab(tab)
+            tabSelectCallback(tab)
         }
     }
 
-    private fun selectTab(tab: TabLayout.Tab?) {
+    private fun tabSelectCallback(tab: TabLayout.Tab?) {
         val tabCount = binding.tabLayout.tabCount
         val folderId = tab?.tag
-        (folderId as? Int)?.run {
-            if (tabCount > 0) {
-                binding.tabLayout.post {
-                    PrefUtil.selectedFolderId = folderId
-                    refreshPaths()
-                    menu?.findItem(R.id.createPath)?.isVisible = folderId != 1
-                }
+        if (folderId is Int && tabCount > 0) {
+            binding.tabLayout.post {
+                PrefUtil.selectedFolderId = folderId
+                refreshPaths()
+                menu?.findItem(R.id.createPath)?.isVisible = folderId != 1
             }
         }
     }
@@ -259,8 +165,75 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
             refreshFolders()
         }
 
-    fun openEdit() {
+    private fun openEdit() {
         val intent = Intent(this, EditActivity::class.java)
         editCallback.launch(intent)
+    }
+
+    override fun onCreateFolder(folder: Folder) {
+        binding.viewModel?.insertFolder(folder)
+        PrefUtil.selectedFolderId = binding.viewModel?.getNewFolderId() ?: PrefUtil.defaultFolderId
+        refreshFolders()
+        showSnackBar(getString(R.string.main_create_folder_success))
+        hideCreateFolder()
+    }
+
+    override fun onCreatePath(path: Path) {
+        binding.viewModel?.insertPath(path)
+        refreshPaths()
+        showSnackBar(getString(R.string.main_create_path_success))
+        hideCreatePath()
+    }
+
+    override fun onCreatePathFailed(createPathFailedType: CreatePathFailedType) {
+        when (createPathFailedType) {
+            CreatePathFailedType.Url -> showSnackBar(getString(R.string.main_create_path_url_error))
+            CreatePathFailedType.Folder -> showSnackBar(getString(R.string.main_create_path_not_find_folder))
+        }
+        hideCreatePath()
+    }
+
+    override fun onPathClick(path: Path) {
+        when (PrefUtil.browserMode) {
+            BrowserModeType.Browser.mode -> {
+                Intent().apply {
+                    action = Intent.ACTION_VIEW
+                    data = path.url.toUri()
+                }.run {
+                    startActivity(this)
+                }
+            }
+            BrowserModeType.WebView.mode -> {
+                Intent(this, DetailActivity::class.java).apply {
+                    putExtra(DetailActivity.PATH_ITEM_KEY, path)
+                }.run {
+                    startActivity(this)
+                }
+            }
+        }
+    }
+
+    override fun onPathDelete(path: Path) {
+        AlertDialog.Builder(this).apply {
+            setTitle(path.title)
+            setMessage(context.getString(R.string.main_path_delete_message))
+            setPositiveButton(context.getString(R.string.common_delete)) { _, _ ->
+                binding.viewModel?.deletePath(path)
+                refreshPaths()
+            }
+            setNegativeButton(context.getString(R.string.common_cancel), null)
+            setOnCancelListener(null)
+        }.create().show()
+    }
+
+    override fun onPathShare(path: Path) {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            val message = path.url
+            putExtra(Intent.EXTRA_TEXT, message)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(intent, null)
+        startActivity(shareIntent)
     }
 }

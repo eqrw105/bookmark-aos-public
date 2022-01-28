@@ -7,7 +7,6 @@ import android.content.Intent
 import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.RadioGroup
 import androidx.core.view.setPadding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -116,7 +115,7 @@ class EditViewModel(private val repository: RepositoryImpl) : ViewModel() {
         if (!isChecked) {
             return
         }
-        when(v.id) {
+        when (v.id) {
             R.id.browserModeBrowser -> {
                 PrefUtil.browserMode = 0
             }

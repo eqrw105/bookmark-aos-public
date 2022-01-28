@@ -8,6 +8,9 @@
         <variable
             name="viewModel"
             type="com.nims.bookmark.ui.main.MainViewModel" />
+        <variable
+            name="listener"
+            type="com.nims.bookmark.listener.OnPathClickListener" />
 
         <import type="android.view.View" />
     </data>
@@ -51,6 +54,7 @@
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:listener="@{viewModel.onScrollListener}"
+                        app:itemListener="@{listener}"
                         app:paths="@{viewModel.paths}"
                         app:viewModel="@{viewModel}" />
 

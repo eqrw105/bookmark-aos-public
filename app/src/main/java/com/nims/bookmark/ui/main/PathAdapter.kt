@@ -9,9 +9,11 @@ import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingViewHolder
 import com.nims.bookmark.databinding.ItemPathBinding
 import com.nims.bookmark.library.ItemTouchHelperListener
+import com.nims.bookmark.listener.OnPathClickListener
 import com.nims.bookmark.room.Path
 
-class PathAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<PathViewHolder>(),
+class PathAdapter(private val viewModel: MainViewModel, private val listener: OnPathClickListener) :
+    RecyclerView.Adapter<PathViewHolder>(),
     ItemTouchHelperListener {
     var items: MutableList<Path> = arrayListOf()
         set(value) {
@@ -28,9 +30,10 @@ class PathAdapter(private val viewModel: MainViewModel) : RecyclerView.Adapter<P
     }
 
     override fun onBindViewHolder(holder: PathViewHolder, position: Int) {
-        val item = items[position].apply {
+        items[position].apply {
             holder.binding.item = this
             holder.binding.viewModel = viewModel
+            holder.binding.listener = listener
         }
     }
 

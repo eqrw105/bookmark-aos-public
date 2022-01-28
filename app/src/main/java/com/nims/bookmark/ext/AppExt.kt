@@ -5,7 +5,11 @@ import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.nims.bookmark.library.ARTProgressDialogFragment
+import com.nims.bookmark.ui.dialog.ARTCreateFolderDialogFragment
+import com.nims.bookmark.ui.dialog.ARTCreatePathDialogFragment
+import com.nims.bookmark.ui.dialog.ARTProgressDialogFragment
+import com.nims.bookmark.ui.main.OnCreateFolderClickListener
+import com.nims.bookmark.ui.main.OnCreatePathClickListener
 
 fun AppCompatActivity.setupActionBar(@IdRes toolbarId: Int) {
     setSupportActionBar(findViewById(toolbarId))
@@ -54,5 +58,40 @@ fun Fragment.showProgress() {
 fun Fragment.hideProgress() {
     val progressDialog =
         childFragmentManager.findFragmentByTag(ARTProgressDialogFragment.TAG) as? ARTProgressDialogFragment
+    progressDialog?.dismissAllowingStateLoss()
+}
+
+fun AppCompatActivity.showCreatePath(
+    title: String = "",
+    url: String = "",
+    listener: OnCreatePathClickListener
+) {
+    if (supportFragmentManager.findFragmentByTag(ARTCreatePathDialogFragment.TAG) == null) {
+        val progressDialog = ARTCreatePathDialogFragment.newInstance(title, url, listener)
+        runOnUiThread {
+            progressDialog.show(supportFragmentManager, ARTCreatePathDialogFragment.TAG)
+        }
+    }
+}
+
+fun AppCompatActivity.hideCreatePath() {
+    val progressDialog =
+        supportFragmentManager.findFragmentByTag(ARTCreatePathDialogFragment.TAG) as? ARTCreatePathDialogFragment
+    progressDialog?.dismissAllowingStateLoss()
+}
+
+
+fun AppCompatActivity.showCreateFolder(listener: OnCreateFolderClickListener) {
+    if (supportFragmentManager.findFragmentByTag(ARTCreateFolderDialogFragment.TAG) == null) {
+        val progressDialog = ARTCreateFolderDialogFragment.newInstance(listener)
+        runOnUiThread {
+            progressDialog.show(supportFragmentManager, ARTCreateFolderDialogFragment.TAG)
+        }
+    }
+}
+
+fun AppCompatActivity.hideCreateFolder() {
+    val progressDialog =
+        supportFragmentManager.findFragmentByTag(ARTCreateFolderDialogFragment.TAG) as? ARTCreateFolderDialogFragment
     progressDialog?.dismissAllowingStateLoss()
 }

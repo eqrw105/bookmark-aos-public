@@ -7,6 +7,7 @@ import com.nims.bookmark.databinding.ActivityEditBinding
 import com.nims.bookmark.ext.addBack
 import com.nims.bookmark.ext.replaceTitle
 import com.nims.bookmark.ext.setupActionBar
+import com.nims.bookmark.library.BrowserModeType
 import com.nims.bookmark.library.PrefUtil
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -23,9 +24,9 @@ class EditActivity : BindingActivity<ActivityEditBinding>() {
         addBack()
         binding.viewModel?.fetchFolders()
 
-        when(PrefUtil.browserMode) {
-            0 -> binding.browserModeBrowser.isChecked = true
-            1 -> binding.browserModeView.isChecked = true
+        when (PrefUtil.browserMode) {
+            BrowserModeType.Browser.mode -> binding.browserModeBrowser.isChecked = true
+            BrowserModeType.WebView.mode -> binding.browserModeView.isChecked = true
         }
     }
 }

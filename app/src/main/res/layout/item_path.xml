@@ -12,13 +12,17 @@
         <variable
             name="item"
             type="com.nims.bookmark.room.Path" />
+
+        <variable
+            name="listener"
+            type="com.nims.bookmark.listener.OnPathClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/CommonItemContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{(v) -> viewModel.openPath(v, item)}">
+        android:onClick="@{(v) -> listener.onPathClick(item)}">
 
         <LinearLayout
             style="@style/MainPathContainer"
@@ -56,7 +60,7 @@
                 style="@style/EditFolderShareImageView"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:onClick="@{(v) -> viewModel.sharePath(v, item)}"
+                android:onClick="@{(v) -> listener.onPathShare(item)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +70,7 @@
                 style="@style/EditFolderDeleteImageView"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:onClick="@{(v) -> viewModel.deletePath(v, item)}"
+                android:onClick="@{(v) -> listener.onPathDelete(item)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
