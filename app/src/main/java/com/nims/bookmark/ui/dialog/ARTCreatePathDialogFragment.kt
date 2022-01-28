@@ -9,8 +9,8 @@ import com.nims.bookmark.R
 import com.nims.bookmark.core.BindingDialogFragment
 import com.nims.bookmark.databinding.FragmentCreatePathBinding
 import com.nims.bookmark.library.PrefUtil
+import com.nims.bookmark.listener.OnCreatePathClickListener
 import com.nims.bookmark.room.Path
-import com.nims.bookmark.ui.main.OnCreatePathClickListener
 import java.util.*
 
 enum class CreatePathFailedType {

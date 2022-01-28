@@ -25,6 +25,7 @@ class ARTUpdateFolderDialogFragment : BindingDialogFragment<FragmentUpdateFolder
             ARTUpdateFolderDialogFragment().apply {
                 isCancelable = false
                 this.listener = listener
+                this.folder = folder
             }
     }
 

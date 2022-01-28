@@ -79,6 +79,7 @@ dependencies {
 
     def ads_version = "20.5.0"
     implementation "com.google.android.gms:play-services-ads:$ads_version"
+    implementation "com.google.android.gms:play-services-ads-lite:$ads_version"
 
     implementation 'androidx.multidex:multidex:2.0.1'
 }

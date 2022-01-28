@@ -8,6 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import com.nims.bookmark.R
 import com.nims.bookmark.library.dp2px
 import com.nims.bookmark.library.getScreenWidth
 
@@ -29,6 +30,9 @@ abstract class BindingDialogFragment<T : ViewDataBinding> : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
+        if (getLayoutResId() == R.layout.fragment_progress_bar) {
+            return
+        }
         dialog?.window?.apply {
             val width = getScreenWidth() - (dp2px(20f).toInt() * 2)
             val height = attributes.height
